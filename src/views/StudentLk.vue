@@ -1,7 +1,7 @@
 <template>
-  <div class="h-screen overflow-auto bg-slate-600 background-custom flex flex-row p-14 gap-14">
-    <div class="bg-background min-w-80 rounded-md flex items-center pt-8 flex-col overflow-auto">
-      <router-link to="/lk/profile-settings" class="absolute left-[315px] rounded-3xl bg-second text-white p-2 shadow-md">
+  <div class="h-screen overflow-auto bg-slate-600 background-custom flex flex-col sm:flex-row p-5 lg:p-14 gap-14">
+    <div class="relative bg-background min-w-80 rounded-md flex items-center pt-8 flex-col overflow-auto min-h-[600px]">
+      <router-link to="/lk/profile-settings" class="absolute right-5 rounded-3xl bg-second text-white p-2 shadow-md">
         <svg-icon type="mdi" :path="mdiPencil"></svg-icon>
       </router-link>
       <img src="@/assets/default_avatar.svg" alt="default_avatar" class="h-44">

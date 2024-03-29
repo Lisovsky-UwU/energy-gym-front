@@ -1,12 +1,12 @@
 <template>
-  <div class="h-full flex flex-row gap-14">
-    <div class="basis-1/2 bg-background rounded-md flex flex-col gap-4 p-4 overflow-auto">
+  <div class="h-full flex flex-col lg:flex-row gap-14 min-w-64">
+    <div class="basis-1/2 bg-background rounded-md flex flex-col gap-4 p-4 overflow-auto min-h-72">
       <div v-for="entry in entries" :key="entry.id" class="entry-block">
         {{ entry.weekday }}: {{ entry.time }}
       </div>
     </div>
 
-    <div class="basis-1/2 bg-background rounded-md flex flex-col gap-4 p-4 overflow-auto">
+    <div class="basis-1/2 bg-background rounded-md flex flex-col gap-4 p-4 overflow-auto min-h-72">
       <div v-for="new_data in news" :key="new_data.id" class="new-block-back">
         <div class="new-block-forward">
           От: {{ new_data.date }}
