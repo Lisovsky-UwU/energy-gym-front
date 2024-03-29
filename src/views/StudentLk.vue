@@ -1,6 +1,9 @@
 <template>
   <div class="h-screen bg-slate-600 background-custom flex flex-row p-14 gap-14">
     <div class="bg-white w-80 rounded-md flex items-center pt-8 flex-col overflow-auto">
+      <router-link to="/lk/profile-settings" class="absolute left-[315px] rounded-3xl bg-second text-white p-2">
+        <svg-icon type="mdi" :path="mdiPencil"></svg-icon>
+      </router-link>
       <img src="@/assets/default_avatar.svg" alt="default_avatar" class="h-44">
       <div class="mt-4 text-center">
         <p class="text-lg">Иванов Иван Иванович</p>
@@ -41,7 +44,7 @@
       </router-link>
 
       <div class="flex-auto">
-        <router-view/>
+        <RouterView/>
       </div>
     </div>
   </div>
@@ -49,7 +52,8 @@
 
 <script setup lang="ts">
 import SvgIcon from '@jamescoyle/vue-icon'
-import { mdiNewspaper, mdiFountainPen, mdiPhoneInTalk, mdiHeadset, mdiArrowLeftThick } from '@mdi/js';
+import { RouterView } from 'vue-router'
+import { mdiPencil, mdiNewspaper, mdiFountainPen, mdiPhoneInTalk, mdiHeadset, mdiArrowLeftThick } from '@mdi/js';
 
 function logout() {
   localStorage.removeItem('token')
