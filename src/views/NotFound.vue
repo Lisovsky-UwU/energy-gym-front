@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white h-full rounded-md flex flex-col items-center justify-center">
+  <div class="bg-background h-full rounded-md flex flex-col items-center justify-center">
     <div class="text-7xl">
       404
     </div>
