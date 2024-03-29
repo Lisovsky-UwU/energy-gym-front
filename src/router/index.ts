@@ -14,7 +14,11 @@ const router = createRouter({
         {
           path: '',
           component: import('@/views/student/Home.vue')
-        }
+        },
+        {
+          path: ':pathMatch(.*)*',
+          component: import('@/views/NotFound.vue')
+        },
       ]
     }
   ]
