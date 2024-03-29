@@ -4,8 +4,10 @@
       {{ props.title }}
     </div>
 
-    <div class="overflow-auto">
-      <slot></slot>
+    <div class="overflow-auto relative full-height">
+      <div class="relative min-h-full">
+        <slot></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -17,3 +19,9 @@ const props = defineProps({
   }
 })
 </script>
+
+<style scoped>
+.full-height {
+  min-height: calc(100% - 68px);
+}
+</style>

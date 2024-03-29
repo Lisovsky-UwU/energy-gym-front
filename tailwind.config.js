@@ -11,6 +11,7 @@ module.exports = {
         primary: '#4caf50',
         second: '#1d2e41',
         accent: '#77b379',
+        tertiary: '#3ea0d6',
 
         'select-entry': {
           1: '#8dcf43',

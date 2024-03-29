@@ -16,6 +16,10 @@ const router = createRouter({
           component: import('@/views/student/Home.vue')
         },
         {
+          path: 'create-entry',
+          component: import('@/views/student/CreateEntry.vue')
+        },
+        {
           path: ':pathMatch(.*)*',
           component: import('@/views/NotFound.vue')
         },
