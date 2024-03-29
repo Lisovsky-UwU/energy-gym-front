@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen bg-slate-600 background-custom flex flex-row p-14 gap-14">
+  <div class="h-screen overflow-auto bg-slate-600 background-custom flex flex-row p-14 gap-14">
     <div class="bg-white w-80 rounded-md flex items-center pt-8 flex-col overflow-auto">
       <router-link to="/lk/profile-settings" class="absolute left-[315px] rounded-3xl bg-second text-white p-2">
         <svg-icon type="mdi" :path="mdiPencil"></svg-icon>
@@ -43,7 +43,7 @@
         <p class="text-[32px] font-light select-none">Энергия СГУГиТ</p>
       </router-link>
 
-      <div class="flex-auto">
+      <div class="flex-auto main-block">
         <RouterView/>
       </div>
     </div>
@@ -71,6 +71,10 @@ function logout() {
 }
 
 .menu-btn {
-  @apply py-2 flex uppercase px-3 place-content-center w-full gap-x-2 text-base font-medium rounded-md shadow-md text-white
+  @apply py-2 flex uppercase px-3 place-content-center w-full gap-x-2 text-base font-medium rounded-md text-white
+}
+
+.main-block {
+  max-height: calc(100% - 104px);
 }
 </style>
