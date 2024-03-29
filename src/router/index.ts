@@ -9,7 +9,13 @@ const router = createRouter({
     },
     {
       path: '/lk',
-      component: import('@/layers/BaseLkLayer.vue')
+      component: import('@/layers/BaseLkLayer.vue'),
+      children: [
+        {
+          path: '',
+          component: import('@/views/student/Home.vue')
+        }
+      ]
     }
   ]
 })
