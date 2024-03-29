@@ -1,5 +1,10 @@
 <template>
-  <div class="h-screen overflow-auto bg-slate-600 background-custom flex flex-col sm:flex-row p-5 lg:p-14 gap-14">
+  <div class="h-screen overflow-auto bg-slate-600 background-custom flex flex-col sm:flex-row p-5 lg:p-14 gap-5 sm:gap-14">
+    <router-link to="/" class="bg-background rounded-md w-fit mx-auto sm:hidden flex items-center gap-5 px-5 py-2">
+      <img src="@/assets/logo_without_back.png" class="h-12">
+      <p class="text-[32px] font-light select-none">Энергия СГУГиТ</p>
+    </router-link>
+
     <div class="relative bg-background min-w-80 rounded-md flex items-center pt-8 flex-col overflow-auto min-h-[600px]">
       <router-link to="/lk/profile-settings" class="absolute right-5 rounded-3xl bg-second text-white p-2 shadow-md">
         <svg-icon type="mdi" :path="mdiPencil"></svg-icon>
@@ -38,7 +43,7 @@
       </div>
     </div>
     <div class="flex-auto flex flex-col gap-10">
-      <router-link to="/" class="bg-background rounded-md w-fit mx-auto flex items-center gap-5 px-5 py-2">
+      <router-link to="/" class="bg-background rounded-md w-fit mx-auto hidden sm:flex items-center gap-5 px-5 py-2">
         <img src="@/assets/logo_without_back.png" class="h-12">
         <p class="text-[32px] font-light select-none">Энергия СГУГиТ</p>
       </router-link>
