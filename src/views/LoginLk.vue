@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen bg-slate-600 background-custom">
-    <div class="w-96 bg-white float-right h-screen p-6">
+    <div class="bg-white float-right h-screen p-6" style="width: 400px;">
       <div class="grid gap-4 grid-cols-1 content-center h-full">
         <div class="justify-self-center">
           <img class="h-56" src="@/assets/logo_without_back.png">
@@ -15,7 +15,7 @@
 
             </div>
             <div v-if="openTab === 1" class="transition-all duration-300 bg-white p-4 rounded-lg shadow-md">
-              <form class="gap-4 grid grid-cols-1" @submit.prevent="">
+              <form class="gap-4 grid grid-cols-1" @submit.prevent="login()">
                 <div class="">
                   <ui-input label="Студенческий билет" placeholder="12345678"/>
                 </div>
@@ -96,6 +96,11 @@ const openTab = ref(1)
 const registrationStep = ref(1)
 
 function registrate() {
+  localStorage.setItem('token', 'user')
+  location.reload()
+}
+
+function login() {
   localStorage.setItem('token', 'user')
   location.reload()
 }
