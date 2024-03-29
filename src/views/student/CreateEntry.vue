@@ -5,7 +5,7 @@
     <div class="bg-select-entry-1 bg-select-entry-2 bg-select-entry-3 bg-select-entry-4" />
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 p-4 place-items-stretch pb-[78px]">
-      <div v-for="weekday in avTimes" :key="'wd-' + weekday.id" class="bg-white shadow-sm rounded-md shadow-black text-center grid grid-cols-2 grid-rows-3 p-2 gap-2">
+      <div v-for="weekday in avTimes" :key="'wd-' + weekday.id" class="bg-white shadow-md rounded-md text-center grid grid-cols-2 grid-rows-3 p-2 gap-2">
         <span class="text-lg col-span-2">{{ weekdayNames[weekday.weekday] }}</span>
 
           <template v-for="(time, index) in weekday.times" :key="`${weekday.id}-${time.id}`">
@@ -24,7 +24,7 @@
     </div>
 
     <div class="w-full min-h-[68px] absolute bottom-0 bg-second flex flex-row-reverse py-3 pr-3 rounded-b-md">
-      <button class="bg-tertiary text-white px-4 py-2 rounded-md uppercase text-lg font-semibold">
+      <button class="bg-tertiary text-white px-12 py-2 rounded-md uppercase text-lg font-semibold">
         Записаться
       </button>
     </div>

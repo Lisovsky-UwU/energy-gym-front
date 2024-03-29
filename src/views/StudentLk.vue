@@ -1,7 +1,7 @@
 <template>
   <div class="h-screen overflow-auto bg-slate-600 background-custom flex flex-row p-14 gap-14">
     <div class="bg-background min-w-80 rounded-md flex items-center pt-8 flex-col overflow-auto">
-      <router-link to="/lk/profile-settings" class="absolute left-[315px] rounded-3xl bg-second text-white p-2">
+      <router-link to="/lk/profile-settings" class="absolute left-[315px] rounded-3xl bg-second text-white p-2 shadow-md">
         <svg-icon type="mdi" :path="mdiPencil"></svg-icon>
       </router-link>
       <img src="@/assets/default_avatar.svg" alt="default_avatar" class="h-44">
@@ -71,7 +71,7 @@ function logout() {
 }
 
 .menu-btn {
-  @apply py-2 flex uppercase px-3 place-content-center w-full gap-x-2 text-base font-medium rounded-md text-white
+  @apply py-2 flex uppercase px-3 place-content-center w-full gap-x-2 text-base font-medium rounded-md text-white shadow-md
 }
 
 .main-block {

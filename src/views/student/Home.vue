@@ -54,11 +54,11 @@ const news = [
 
 <style scoped>
 .entry-block {
-  @apply bg-second rounded-md shadow-md shadow-black text-white p-3 text-center
+  @apply bg-second rounded-md shadow-md text-white p-3 text-center
 }
 
 .new-block-back {
-  @apply shadow-md shadow-black;
+  @apply shadow-md;
   padding: 1rem;
   position: relative;
   background: linear-gradient(90deg, #32cc13, #1818db 30%, #ec7c0c 70%, #7310cf);
