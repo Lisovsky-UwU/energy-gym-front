@@ -8,8 +8,8 @@
           <div class="">
 
             <div class="mb-4 flex space-x-4 p-2 bg-white rounded-lg shadow-md">
-              <button @click="openTab = 1" :class="{ 'bg-blue-600 text-white': openTab === 1 }" class="flex-1 py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-blue transition-all duration-300">Вход</button>
-              <button @click="openTab = 2" :class="{ 'bg-blue-600 text-white': openTab === 2 }" class="flex-1 py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-blue transition-all duration-300">Регистрация</button>
+              <button @click="openTab = 1" :class="{ 'bg-primary text-white': openTab === 1 }" class="flex-1 py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-blue transition-all duration-300">Вход</button>
+              <button @click="openTab = 2" :class="{ 'bg-primary text-white': openTab === 2 }" class="flex-1 py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-blue transition-all duration-300">Регистрация</button>
             </div>
             <div class="transition-all">
 
@@ -22,7 +22,9 @@
                 <div>
                   <ui-input type="password" label="Пароль" placeholder="*******"/>
                 </div>
-                <ui-button label="Войти" submit/>
+                <button class="btn-custom" type="submit">
+                  Войти
+                </button>
               </form>
               
             </div>
@@ -69,11 +71,11 @@
                     <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
                     Назад
                   </button>
-                  <button v-if="registrationStep < 3" type="button" class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" @click="registrationStep += 1">
+                  <button v-if="registrationStep < 3" type="button" class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent bg-primary text-white hover:bg-accent disabled:opacity-50 disabled:pointer-events-none" @click="registrationStep += 1">
                     Далее
                     <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                   </button>
-                  <button v-else type="button" class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" @click="registrate()">
+                  <button v-else type="button" class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent bg-primary text-white hover:bg-accent disabled:opacity-50 disabled:pointer-events-none" @click="registrate()">
                     Зарегистрироваться
                   </button>
                 </div>
@@ -90,7 +92,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import UiInput from '@/components/ui/Input.vue'
-import UiButton from '@/components/ui/Button.vue'
 
 const openTab = ref(1)
 const registrationStep = ref(1)
