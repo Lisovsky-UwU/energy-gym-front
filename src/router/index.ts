@@ -28,6 +28,10 @@ const router = createRouter({
           component: import('@/views/student/Support.vue')
         },
         {
+          path: 'profile-settings',
+          component: import('@/views/student/ProfileSettings.vue')
+        },
+        {
           path: ':pathMatch(.*)*',
           component: import('@/views/NotFound.vue')
         },
