@@ -4,7 +4,7 @@
       {{ props.title }}
     </div>
 
-    <div class="overflow-auto relative full-height">
+    <div class="overflow-visible sm:overflow-auto relative full-height">
       <div class="relative min-h-full">
         <slot></slot>
       </div>
