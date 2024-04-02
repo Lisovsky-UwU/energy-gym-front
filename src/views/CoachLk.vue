@@ -60,7 +60,7 @@ import { RouterView } from 'vue-router'
 import { mdiPencil, mdiNewspaper, mdiFileDocumentEdit, mdiPhoneInTalk, mdiHeadset, mdiArrowLeftThick } from '@mdi/js';
 
 function logout() {
-  localStorage.removeItem('token')
+  localStorage.removeItem('token_coach')
   location.reload()
 }
 </script>
