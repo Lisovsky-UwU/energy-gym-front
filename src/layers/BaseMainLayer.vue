@@ -25,13 +25,13 @@
     </div>
     
     <div class="bg-gray-600 overflow-auto p-5 flex flex-row gap-5">
-      <img class="h-[500px]" src="`@/assets/mobile-screen/1.png`" alt="Mobile screen 1">
-      <img class="h-[500px]" src="`@/assets/mobile-screen/2.png`" alt="Mobile screen 2">
-      <img class="h-[500px]" src="`@/assets/mobile-screen/3.png`" alt="Mobile screen 3">
-      <img class="h-[500px]" src="`@/assets/mobile-screen/4.png`" alt="Mobile screen 4">
-      <img class="h-[500px]" src="`@/assets/mobile-screen/5.png`" alt="Mobile screen 5">
-      <img class="h-[500px]" src="`@/assets/mobile-screen/6.png`" alt="Mobile screen 6">
-      <img class="h-[500px]" src="`@/assets/mobile-screen/7.png`" alt="Mobile screen 7">
+      <img class="h-[500px]" src="@/assets/mobile-screen/1.png" alt="Mobile screen 1">
+      <img class="h-[500px]" src="@/assets/mobile-screen/2.png" alt="Mobile screen 2">
+      <img class="h-[500px]" src="@/assets/mobile-screen/3.png" alt="Mobile screen 3">
+      <img class="h-[500px]" src="@/assets/mobile-screen/4.png" alt="Mobile screen 4">
+      <img class="h-[500px]" src="@/assets/mobile-screen/5.png" alt="Mobile screen 5">
+      <img class="h-[500px]" src="@/assets/mobile-screen/6.png" alt="Mobile screen 6">
+      <img class="h-[500px]" src="@/assets/mobile-screen/7.png" alt="Mobile screen 7">
     </div>
 
     <div class="p-9">
