@@ -42,6 +42,10 @@ const router = createRouter({
       component: import('@/layers/BaseCoachLayer.vue'),
       children: [
         {
+          path: '',
+          component: import('@/views/coach/Home.vue')
+        },
+        {
           path: ':pathMatch(.*)*',
           component: import('@/views/NotFound.vue')
         },

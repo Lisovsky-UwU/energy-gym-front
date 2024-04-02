@@ -5,13 +5,13 @@
       <p class="text-[32px] font-light select-none">Энергия СГУГиТ</p>
     </router-link>
 
-    <div class="relative bg-background min-w-80 rounded-md flex items-center pt-8 flex-col overflow-auto min-h-[600px] sm:min-h-0">
-      <router-link to="/lk/profile-settings" class="absolute right-5 rounded-3xl bg-second text-white p-2 shadow-md">
+    <div class="relative bg-background min-w-80 sm:max-w-80 rounded-md flex items-center pt-8 flex-col overflow-auto min-h-[600px] sm:min-h-0">
+      <router-link to="/coach/profile-settings" class="absolute right-5 rounded-3xl bg-second text-white p-2 shadow-md">
         <svg-icon type="mdi" :path="mdiPencil"></svg-icon>
       </router-link>
       <img src="@/assets/default_avatar.svg" alt="default_avatar" class="h-44">
       <div class="mt-4 text-center">
-        <p class="text-lg">Иванов Иван Иванович</p>
+        <p class="text-lg">Дьяченко Наталья Николаевна</p>
         <p class="text-lg">Статус: Тренер</p>
       </div>
       <div class="my-4 w-full px-5 gap-3 flex flex-col">
@@ -21,7 +21,7 @@
         </router-link>
 
         <router-link to="/coach/lists" class="menu-btn bg-menu-btn-2 hover:bg-menu-btn-2-hover">
-          <svg-icon type="mdi" :path="mdiFountainPen"></svg-icon>
+          <svg-icon type="mdi" :path="mdiFileDocumentEdit"></svg-icon>
           Списки
         </router-link>
 
@@ -57,7 +57,7 @@
 <script setup lang="ts">
 import SvgIcon from '@jamescoyle/vue-icon'
 import { RouterView } from 'vue-router'
-import { mdiPencil, mdiNewspaper, mdiFountainPen, mdiPhoneInTalk, mdiHeadset, mdiArrowLeftThick } from '@mdi/js';
+import { mdiPencil, mdiNewspaper, mdiFileDocumentEdit, mdiPhoneInTalk, mdiHeadset, mdiArrowLeftThick } from '@mdi/js';
 
 function logout() {
   localStorage.removeItem('token')
