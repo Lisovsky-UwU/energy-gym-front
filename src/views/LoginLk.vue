@@ -27,6 +27,9 @@
                 </button>
               </form>
               
+              <router-link to="/coach" class="bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded-md transition-all text-center block mt-3">
+                Для тренера
+              </router-link>
             </div>
 
             <div v-if="openTab === 2" class="transition-all duration-300 bg-white p-4 rounded-lg shadow-md">
