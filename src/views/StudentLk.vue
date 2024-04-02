@@ -76,7 +76,7 @@ function logout() {
 }
 
 .menu-btn {
-  @apply py-2 flex uppercase px-3 place-content-center w-full gap-x-2 text-base font-medium rounded-md text-white shadow-md
+  @apply py-2 flex uppercase px-3 place-content-center w-full gap-x-2 text-base font-medium rounded-md text-white shadow-md transition-all
 }
 
 .main-block {
