@@ -54,6 +54,10 @@ const router = createRouter({
           component: import('@/views/coach/StudentChats.vue')
         },
         {
+          path: 'profile-settings',
+          component: import('@/views/coach/ProfileSettings.vue')
+        },
+        {
           path: ':pathMatch(.*)*',
           component: import('@/views/NotFound.vue')
         },
