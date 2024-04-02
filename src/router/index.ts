@@ -46,6 +46,14 @@ const router = createRouter({
           component: import('@/views/coach/Home.vue')
         },
         {
+          path: 'support',
+          component: import('@/views/coach/Support.vue')
+        },
+        {
+          path: 'student-chats',
+          component: import('@/views/coach/StudentChats.vue')
+        },
+        {
           path: ':pathMatch(.*)*',
           component: import('@/views/NotFound.vue')
         },

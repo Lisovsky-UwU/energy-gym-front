@@ -1,6 +1,6 @@
 <template>
   <MainBlockLkTemplate title="Связь с тренером">
-    <div class="absolute flex items-center justify-center h-full w-full text-2xl">
+    <div class="flex items-center sm:h-full sm:absolute justify-center text-2xl py-6">
       <span class="text-center">
         Раздел находится в разработке
         <br>

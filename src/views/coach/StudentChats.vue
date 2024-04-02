@@ -1,5 +1,5 @@
 <template>
-  <MainBlockLkTemplate title="Поддержка">
+  <MainBlockLkTemplate title="Связь со студентами">
     <div class="flex items-center sm:h-full sm:absolute justify-center text-2xl py-6">
       <span class="text-center">
         Раздел находится в разработке
