@@ -46,6 +46,15 @@ const router = createRouter({
           component: import('@/views/coach/Home.vue')
         },
         {
+          path: 'lists',
+          component: import('@/views/coach/student_list/SelectDay.vue')
+        },
+        {
+          path: 'lists/:weekday',
+          component: import('@/views/coach/student_list/DayList.vue'),
+          props: true
+        },
+        {
           path: 'support',
           component: import('@/views/coach/Support.vue')
         },
