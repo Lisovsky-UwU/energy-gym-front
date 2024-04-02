@@ -5,70 +5,70 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      component: import('@/layers/BaseMainLayer.vue')
+      component: async () => await import('@/layers/BaseMainLayer.vue')
     },
     {
       path: '/lk',
-      component: import('@/layers/BaseLkLayer.vue'),
+      component: async () => await import('@/layers/BaseLkLayer.vue'),
       children: [
         {
           path: '',
-          component: import('@/views/student/Home.vue')
+          component: async () => await import('@/views/student/Home.vue')
         },
         {
           path: 'create-entry',
-          component: import('@/views/student/CreateEntry.vue')
+          component: async () => await import('@/views/student/CreateEntry.vue')
         },
         {
           path: 'coach-support',
-          component: import('@/views/student/CoachSupport.vue')
+          component: async () => await import('@/views/student/CoachSupport.vue')
         },
         {
           path: 'support',
-          component: import('@/views/student/Support.vue')
+          component: async () => await import('@/views/student/Support.vue')
         },
         {
           path: 'profile-settings',
-          component: import('@/views/student/ProfileSettings.vue')
+          component: async () => await import('@/views/student/ProfileSettings.vue')
         },
         {
           path: ':pathMatch(.*)*',
-          component: import('@/views/NotFound.vue')
+          component: async () => await import('@/views/NotFound.vue')
         },
       ]
     },
     {
       path: '/coach',
-      component: import('@/layers/BaseCoachLayer.vue'),
+      component: async () => await import('@/layers/BaseCoachLayer.vue'),
       children: [
         {
           path: '',
-          component: import('@/views/coach/Home.vue')
+          component: async () => await import('@/views/coach/Home.vue')
         },
         {
           path: 'lists',
-          component: import('@/views/coach/student_list/SelectDay.vue')
+          component: async () => await import('@/views/coach/student_list/SelectDay.vue')
         },
         {
           path: 'lists/:weekday',
-          component: import('@/views/coach/student_list/DayList.vue'),
+          component: async () => await import('@/views/coach/student_list/DayList.vue'),
           props: true
         },
         {
           path: 'support',
-          component: import('@/views/coach/Support.vue')
+          component: async () => await import('@/views/coach/Support.vue')
         },
         {
           path: 'student-chats',
-          component: import('@/views/coach/StudentChats.vue')
+          component: async () => await import('@/views/coach/StudentChats.vue')
         },
         {
           path: 'profile-settings',
-          component: import('@/views/coach/ProfileSettings.vue')
+          component: async () => await import('@/views/coach/ProfileSettings.vue')
         },
         {
           path: ':pathMatch(.*)*',
-          component: import('@/views/NotFound.vue')
+          component: async () => await import('@/views/NotFound.vue')
         },
       ]
     }
