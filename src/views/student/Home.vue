@@ -56,17 +56,4 @@ const news = [
 .entry-block {
   @apply bg-second rounded-md shadow-md text-white p-3 text-center
 }
-
-.new-block-back {
-  @apply shadow-md;
-  padding: 1rem;
-  position: relative;
-  background: linear-gradient(90deg, #32cc13, #1818db 30%, #ec7c0c 70%, #7310cf);
-  padding: 2px;
-  border-radius: 6px;
-}
-
-.new-block-forward {
-  @apply bg-second rounded-md text-white py-3 px-5
-}
 </style>

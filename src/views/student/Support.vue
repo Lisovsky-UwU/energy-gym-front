@@ -4,7 +4,7 @@
       <span class="text-center">
         Раздел находится в разработке
         <br>
-        По всем вопросам пишите на почту <a class="text-primary font-bold underline" href="mailto:gym.energy.cats@gmail.com">gym.energy.cats@gmail.com</a>
+        По всем вопросам пишите на почту <a class="link-custom font-bold" href="mailto:gym.energy.cats@gmail.com">gym.energy.cats@gmail.com</a>
       </span>
     </div>
   </MainBlockLkTemplate>
