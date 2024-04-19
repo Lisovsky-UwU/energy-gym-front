@@ -2,9 +2,9 @@
   <div class="h-screen bg-slate-600 background-custom">
     <div class="bg-white sm:float-right h-screen p-6 w-full sm:w-[400px]">
       <div class="grid gap-4 grid-cols-1 content-center sm:h-full">
-        <div class="justify-self-center">
+        <router-link to="/" class="justify-self-center">
           <img class="h-56" src="@/assets/logo_without_back.png">
-        </div>
+        </router-link>
         <form class="gap-4 grid grid-cols-1" @submit.prevent="login()">
           <div class="">
             <ui-input label="Логин" placeholder="12345678" required/>

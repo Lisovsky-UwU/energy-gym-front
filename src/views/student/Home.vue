@@ -1,6 +1,6 @@
 <template>
-  <div class="h-full flex flex-col lg:flex-row gap-5 sm:gap-14 min-w-64">
-    <div class="basis-1/2 bg-background rounded-md flex flex-col gap-4 p-4 overflow-auto min-h-72">
+  <div class="sm:h-full flex flex-col lg:flex-row gap-5 sm:gap-14 min-w-64">
+    <div class="basis-1/2 bg-background rounded-md flex flex-col gap-4 p-4 overflow-visible sm:overflow-auto min-h-72">
       <div v-for="entry in entries" :key="entry.id" class="entry-block">
         {{ entry.weekday }}: {{ entry.time }}
       </div>

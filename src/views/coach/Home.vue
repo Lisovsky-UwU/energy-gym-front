@@ -1,6 +1,6 @@
 <template>
-  <div class="h-full flex flex-col lg:flex-row gap-5 sm:gap-14 min-w-64">
-    <div class="basis-1/2 bg-background rounded-md relative flex flex-col gap-4 p-4 overflow-auto min-h-72 place-items-center">
+  <div class="sm:h-full flex flex-col lg:flex-row gap-5 sm:gap-14 min-w-64">
+    <div class="basis-1/2 bg-background rounded-md relative flex flex-col gap-4 p-4 overflow-visible sm:overflow-auto min-h-72 place-items-center">
       <div class="flex flex-row gap-4">
         <input class="bg-second text-white p-3 rounded-md" type="date" id="start" name="trip-start" value="2024-04-02" min="2024-01-01" max="2024-12-31" />
 
@@ -8,7 +8,6 @@
           class="text-white rounded-md py-2 px-4 bg-second" 
           :name="`visit-${index}`" 
           :id="`visit-${index}`"
-          v-model="selected[index]"
         >
           <option selected value="16:00">16:00</option>
           <option value="17:30">17:30</option>

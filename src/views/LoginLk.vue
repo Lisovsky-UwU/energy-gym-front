@@ -2,9 +2,9 @@
   <div class="h-screen bg-slate-600 background-custom">
     <div class="bg-white sm:float-right h-screen p-6 w-full sm:w-[400px]">
       <div class="grid gap-4 grid-cols-1 content-center sm:h-full">
-        <div class="justify-self-center">
+        <router-link to="/" class="justify-self-center">
           <img class="h-56" src="@/assets/logo_without_back.png">
-        </div>
+        </router-link>
           <div class="">
 
             <div class="mb-4 flex space-x-4 p-2 bg-white rounded-lg shadow-md">
