@@ -1,5 +1,9 @@
 import { defineStore } from 'pinia'
 import { useSnackbarStore } from './snackbar'
+import { useUserDataStore, type UserData } from './user'
+
+const snackbar = useSnackbarStore()
+const userData = useUserDataStore()
 
 
 interface ErrorResponse {
@@ -8,20 +12,9 @@ interface ErrorResponse {
     errorType: string
 }
 
-
 interface BaseResponse {
     error: boolean,
     data: any
-}
-
-
-interface UserData {
-    studentCard: number,
-    firstname: string,
-    secondname: string,
-    surname: string
-    group: string,
-    role: string,
 }
 
 
@@ -31,24 +24,14 @@ interface UserLoginResponse {
 }
 
 
-const snackbar = useSnackbarStore()
-
-
 export const useApiStudentStore = defineStore('apiStudent', {
     state: () => ({
         studentToken: null as string | null,
-        userData: null as UserData | null
     }),
 
     getters: {
         isLogin(): boolean {
             return this.studentToken != null
-        },
-        fullname(): string {
-            return this.isLogin ? `${this.userData?.secondname} ${this.userData?.firstname} ${this.userData?.surname}` : 'No data'
-        },
-        role(): string {
-            return this.userData?.role || 'No data'
         }
     },
 
@@ -57,20 +40,20 @@ export const useApiStudentStore = defineStore('apiStudent', {
             this.studentToken = localStorage.getItem('studentToken')
             if (this.studentToken != null) {
                 const result: UserData = await this.doRequest('/auth/check-login', 'GET')
-                this.userData = result
+                userData.set(result)
             }
         },
 
         async login(login: string, password: string) {
             const result: UserLoginResponse = await this.doRequest('/auth/login', 'POST', {'login': login, 'password': password})
             this.studentToken = result.token
-            this.userData = result.userData
+            userData.set(result.userData)
             localStorage.setItem('studentToken', this.studentToken)
         },
 
         logout() {
             this.studentToken = null
-            this.userData = null
+            userData.invalidate()
             localStorage.removeItem('studentToken')
         },
 
@@ -118,19 +101,12 @@ export const useApiStudentStore = defineStore('apiStudent', {
 export const useApiCoachStore = defineStore('apiCoach', {
     state: () => ({
         coachToken: null as string | null,
-        userData: null as UserData | null,
     }),
 
     getters: {
         isLogin(): boolean {
             return this.coachToken != null
         },
-        fullname(): string {
-            return this.isLogin ? `${this.userData?.secondname} ${this.userData?.firstname} ${this.userData?.surname}` : 'No data'
-        },
-        role(): string {
-            return this.userData?.role || 'No data'
-        }
     },
 
     actions: {
@@ -139,20 +115,20 @@ export const useApiCoachStore = defineStore('apiCoach', {
             if (this.coachToken != null) {
                 const result: UserData = await this.doRequest('/auth/check-login', 'GET')
                 console.log(result)
-                this.userData = result
+                userData.set(result)
             }
         },
 
         async login(login: string, password: string) {
             const result: UserLoginResponse = await this.doRequest('/auth/login/coach', 'POST', {'login': login, 'password': password})
             this.coachToken = result.token
-            this.userData = result.userData
+            userData.set(result.userData)
             localStorage.setItem('coachToken', this.coachToken)
         },
 
         logout() {
             this.coachToken = null
-            this.userData = null
+            userData.invalidate()
             localStorage.removeItem('coachToken')
         },
 

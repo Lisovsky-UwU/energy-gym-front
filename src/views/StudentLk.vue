@@ -11,9 +11,9 @@
       </router-link>
       <img src="@/assets/default_avatar.svg" alt="default_avatar" class="h-44">
       <div class="mt-4 text-center">
-        <p class="text-lg">{{ api.fullname }}</p>
-        <p class="text-lg">Группа: {{ api.userData?.group }}</p>
-        <p class="text-lg">Статус: {{ userRole[api.role] }}</p>
+        <p class="text-lg">{{ userData.fullname }}</p>
+        <p class="text-lg">Группа: {{ userData.userData?.group }}</p>
+        <p class="text-lg">Статус: {{ userRole[userData.role] }}</p>
       </div>
       <div class="my-4 w-full px-5 gap-3 flex flex-col">
         <router-link to="/lk" class="menu-btn bg-menu-btn-1 hover:bg-menu-btn-1-hover">
@@ -60,9 +60,11 @@ import SvgIcon from '@jamescoyle/vue-icon'
 import { RouterView } from 'vue-router'
 import { mdiPencil, mdiNewspaper, mdiFountainPen, mdiPhoneInTalk, mdiHeadset, mdiArrowLeftThick } from '@mdi/js';
 import { useApiStudentStore } from '@/stores/api';
+import { useUserDataStore } from '@/stores/user';
 import { userRole } from '@/Common.ts'
 
 const api = useApiStudentStore()
+const userData = useUserDataStore()
 </script>
 
 <style scoped>
