@@ -11,8 +11,8 @@
       </router-link>
       <img src="@/assets/default_avatar.svg" alt="default_avatar" class="h-44">
       <div class="mt-4 text-center">
-        <p class="text-lg">Дьяченко Наталья Николаевна</p>
-        <p class="text-lg">Статус: Тренер</p>
+        <p class="text-lg">{{ api.fullname }}</p>
+        <p class="text-lg">Статус: {{ userRole[api.role] }}</p>
       </div>
       <div class="my-4 w-full px-5 gap-3 flex flex-col">
         <router-link to="/coach" class="menu-btn bg-menu-btn-1 hover:bg-menu-btn-1-hover">
@@ -35,7 +35,7 @@
           Поддержка
         </router-link>
 
-        <button class="menu-btn bg-menu-btn-5 hover:bg-menu-btn-5-hover" @click="logout()">
+        <button class="menu-btn bg-menu-btn-5 hover:bg-menu-btn-5-hover" @click="api.logout()">
           <svg-icon type="mdi" :path="mdiArrowLeftThick"></svg-icon>
           Выход
         </button>
@@ -58,11 +58,10 @@
 import SvgIcon from '@jamescoyle/vue-icon'
 import { RouterView } from 'vue-router'
 import { mdiPencil, mdiNewspaper, mdiFileDocumentEdit, mdiPhoneInTalk, mdiHeadset, mdiArrowLeftThick } from '@mdi/js';
+import { useApiCoachStore } from '@/stores/api';
+import { userRole } from '@/Common.ts'
 
-function logout() {
-  localStorage.removeItem('token_coach')
-  location.reload()
-}
+const api = useApiCoachStore()
 </script>
 
 <style scoped>

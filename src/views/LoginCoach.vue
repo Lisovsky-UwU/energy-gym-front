@@ -7,10 +7,10 @@
         </router-link>
         <form class="gap-4 grid grid-cols-1" @submit.prevent="login()">
           <div class="">
-            <ui-input label="Логин" placeholder="12345678" required/>
+            <ui-input label="Логин" placeholder="12345678" v-model="loginText" required/>
           </div>
           <div>
-            <ui-input type="password" label="Пароль" placeholder="*******" required/>
+            <ui-input type="password" label="Пароль" placeholder="*******" v-model="passwordText" required/>
           </div>
           <button class="btn-custom" type="submit">
             Войти
@@ -22,11 +22,17 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import UiInput from '@/components/ui/Input.vue'
+import { useApiCoachStore } from '@/stores/api';
 
-function login() {
-  localStorage.setItem('token_coach', 'coach')
-  location.reload()
+const api = useApiCoachStore()
+
+const loginText = ref('')
+const passwordText = ref('')
+
+async function login() {
+  await api.login(loginText.value, passwordText.value)
 }
 </script>
 

@@ -15,12 +15,12 @@
 
             </div>
             <div v-if="openTab === 1" class="transition-all duration-300 bg-white p-4 rounded-lg shadow-md">
-              <form class="gap-4 grid grid-cols-1" @submit.prevent="login()">
+              <form class="gap-4 grid grid-cols-1" @submit.prevent="login">
                 <div class="">
-                  <ui-input label="Студенческий билет" placeholder="12345678" required/>
+                  <ui-input label="Студенческий билет" placeholder="12345678" v-model="loginText" required/>
                 </div>
                 <div>
-                  <ui-input type="password" label="Пароль" placeholder="*******" required/>
+                  <ui-input type="password" label="Пароль" placeholder="*******" v-model="passwordText" required/>
                 </div>
                 <button class="btn-custom" type="submit">
                   Войти
@@ -95,18 +95,23 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import UiInput from '@/components/ui/Input.vue'
+import { useApiStudentStore } from '@/stores/api';
+
+const api = useApiStudentStore()
 
 const openTab = ref(1)
 const registrationStep = ref(1)
+
+const loginText = ref('')
+const passwordText = ref('')
 
 function registrate() {
   localStorage.setItem('token', 'user')
   location.reload()
 }
 
-function login() {
-  localStorage.setItem('token', 'user')
-  location.reload()
+async function login() {
+  await api.login(loginText.value, passwordText.value)
 }
 
 </script>

@@ -124,6 +124,12 @@ export const useApiCoachStore = defineStore('apiCoach', {
     getters: {
         isLogin(): boolean {
             return this.coachToken != null
+        },
+        fullname(): string {
+            return this.isLogin ? `${this.userData?.secondname} ${this.userData?.firstname} ${this.userData?.surname}` : 'No data'
+        },
+        role(): string {
+            return this.userData?.role || 'No data'
         }
     },
 
@@ -131,12 +137,14 @@ export const useApiCoachStore = defineStore('apiCoach', {
         async checkLogin() {
             this.coachToken = localStorage.getItem('coachToken')
             if (this.coachToken != null) {
-                await this.doRequest('/auth/check-login', 'GET')
+                const result: UserData = await this.doRequest('/auth/check-login', 'GET')
+                console.log(result)
+                this.userData = result
             }
         },
 
         async login(login: string, password: string) {
-            const result: UserLoginResponse = await this.doRequest('/auth/login', 'POST', {'login': login, 'password': password})
+            const result: UserLoginResponse = await this.doRequest('/auth/login/coach', 'POST', {'login': login, 'password': password})
             this.coachToken = result.token
             this.userData = result.userData
             localStorage.setItem('coachToken', this.coachToken)
