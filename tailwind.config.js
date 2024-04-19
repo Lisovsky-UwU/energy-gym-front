@@ -41,6 +41,12 @@ module.exports = {
             DEFAULT: '#7d2880',
             hover: '#7b407d'
           },
+        },
+
+        snackbar: {
+          error: '#d62f2f',
+          success: '#30d61e',
+          warning: '#e69720'
         }
       }
     },

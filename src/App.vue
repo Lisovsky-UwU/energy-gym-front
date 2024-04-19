@@ -1,23 +1,22 @@
-<script setup lang="ts">
-import { RouterView } from 'vue-router'
-</script>
-
 <template>
   <RouterView/>
-  <!-- <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+  <div :hidden="!snackbar.show" class="absolute top-0 w-full sm:w-auto right-0 place-items-center">
+    <div :class="'text-white rounded-lg p-2 m-3 w-auto flex bg-snackbar-' + snackbar.color">
+      <span class="flex-grow px-3">{{ snackbar.text }}</span>
+      <button @click="snackbar.hide()" class="ml-2">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
     </div>
-  </header>
-
-  <RouterView /> -->
+  </div>
 </template>
+
+<script setup lang="ts">
+import { RouterView } from 'vue-router'
+import { useSnackbarStore } from '@/stores/snackbar'
+
+const snackbar = useSnackbarStore()
+</script>
 
 <style scoped></style>
