@@ -8,7 +8,7 @@ module.exports = {
     extend: {
       colors: {
         background: '#edeff5',
-        primary: '#4caf50',
+        primary: '#3acf61',
         second: '#1d2e41',
         accent: '#77b379',
         tertiary: '#3ea0d6',
@@ -23,15 +23,15 @@ module.exports = {
         'menu-btn': {
           1: {
             DEFAULT: '#61b1dd',
-            hover: '#81bbdb'
+            hover: '#91c7e6'
           },
           2: {
-            DEFAULT: '#49ca89',
-            hover: '#67cf9b'
+            DEFAULT: '#3acf61',
+            hover: '#6fe38e'
           },
           3: {
             DEFAULT: '#bc5162',
-            hover: '#b5626f'
+            hover: '#d47282'
           },
           4: {
             DEFAULT: '#e17e70',
@@ -39,13 +39,13 @@ module.exports = {
           },
           5: {
             DEFAULT: '#7d2880',
-            hover: '#7b407d'
+            hover: '#9e52a1'
           },
         },
 
         snackbar: {
           error: '#d62f2f',
-          success: '#30d61e',
+          success: '#3acf61',
           warning: '#e69720'
         }
       }

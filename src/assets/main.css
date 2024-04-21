@@ -6,6 +6,10 @@
     @apply bg-primary hover:bg-accent text-white px-4 py-2 rounded-md transition-all;
 }
 
+.btn-custom-load {
+  @apply bg-primary text-white px-4 py-2 rounded-md transition-all;
+}
+
 .link-custom {
     @apply text-primary underline
 }

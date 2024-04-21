@@ -8,6 +8,7 @@
       :id="name" 
       :name="name" 
       :placeholder="props.placeholder" 
+      :minlength="props.minlength"
       v-model="model"
       class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500" 
     >
@@ -31,6 +32,10 @@ const props = defineProps({
   readonly: {
     type: Boolean,
     default: false
+  },
+  minlength: {
+    type: String,
+    default: "0"
   }
 })
 

@@ -1,5 +1,9 @@
 <template>
   <RouterView/>
+
+  <!-- Костыль, чтобы точно подгрузить цвета для snackbar -->
+  <div class="bg-snackbar-error bg-snackbar-success bg-snackbar-warning" />
+
   <div :hidden="!snackbar.show" class="absolute top-0 w-full sm:w-auto right-0 place-items-center">
     <div :class="'text-white rounded-lg p-2 m-3 w-auto flex bg-snackbar-' + snackbar.color">
       <span class="flex-grow px-3">{{ snackbar.text }}</span>

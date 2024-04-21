@@ -1,18 +1,19 @@
 <template>
   <MainBlockLkTemplate title="Настройки профиля">
     <div class="p-4 grid grid-cols-1 lg:grid-cols-2 lg:gap-4 min-h-[500px] gap-3 lg:min-h-0">
-      <ui-input label="Фамилия" v-model="userInfo.secondname"/>
-      <ui-input label="Имя" v-model="userInfo.firstname"/>
-      <ui-input label="Отчество" v-model="userInfo.surname"/>
-      <ui-input label="Студенческий билет" v-model="userInfo.stud_number" readonly/>
-      <ui-input label="Группа" v-model="userInfo.group"/>
+      <ui-input label="Фамилия" v-model="localUserData.secondname"/>
+      <ui-input label="Имя" v-model="localUserData.firstname"/>
+      <ui-input label="Отчество" v-model="localUserData.surname"/>
+      <ui-input label="Студенческий билет" v-model="localUserData.studentCard" readonly/>
+      <ui-input label="Группа" v-model="localUserData.group"/>
       <div class="flex place-items-center justify-center">
         <button class="btn-custom">
           Выбрать фото
         </button>
       </div>
       <div class="lg:col-span-2 flex place-items-center justify-center">
-        <button class="btn-custom">
+        <button :disabled="loadingSave" :class="loadingSave ? 'btn-custom-load' : 'btn-custom'" @click="updateUserData()">
+          <LoadingSmall v-if="loadingSave"/>
           Сохранить изменения
         </button>
       </div>
@@ -22,14 +23,17 @@
         Смена пароля
       </span>
 
-      <ui-input label="Прежний пароль" type="password" placeholder="*******"/>
-      <ui-input label="Новый пароль" type="password" placeholder="*******"/>
-      <ui-input label="Повторите новый пароль" type="password" placeholder="*******"/>
-      <div class="flex place-items-center justify-center">
-        <button class="btn-custom">
-          Сменить пароль
-        </button>
-      </div>
+      <form class="lg:col-span-2 grid grid-cols-1 lg:grid-cols-2 lg:gap-4 gap-3" @submit.prevent="changePassword()">
+        <ui-input type="password" placeholder="*******" required minlength="8" label="Новый пароль" v-model="passwordChangeData.newPassword"/>
+        <ui-input type="password" placeholder="*******" required minlength="8" label="Повторите новый пароль" v-model="passwordChangeData.newPasswordRepeat"/>
+        <ui-input type="password" placeholder="*******" required minlength="8" label="Прежний пароль" v-model="passwordChangeData.oldPassword"/>
+        <div class="flex place-items-center justify-center">
+          <button :disabled="loadingSavePassword" :class="loadingSavePassword ? 'btn-custom-load' : 'btn-custom'" type="submit">
+            <LoadingSmall v-if="loadingSavePassword"/>
+            Сменить пароль
+          </button>
+        </div>
+      </form>
       
     </div>
   </MainBlockLkTemplate>
@@ -38,13 +42,45 @@
 <script lang="ts" setup>
 import MainBlockLkTemplate from '@/components/ui/MainBlockLkTemplate.vue'
 import UiInput from '@/components/ui/Input.vue'
-import { reactive } from 'vue';
+import LoadingSmall from '@/components/ui/LoadingSmall.vue'
+import { reactive, ref } from 'vue';
+import { useUserDataStore, type UserData } from '@/stores/user';
+import { useSnackbarStore } from '@/stores/snackbar';
 
-const userInfo = reactive({
-  secondname: 'Иванов',
-  firstname: 'Иван',
-  surname: 'Иванович',
-  group: 'БИ-42',
-  stud_number: '12345678'
+const userData = useUserDataStore()
+const snackbar = useSnackbarStore()
+
+const loadingSave = ref(false)
+const loadingSavePassword = ref(false)
+const localUserData = reactive({...userData.userData}) as UserData
+
+const passwordChangeData = reactive({
+  oldPassword: '',
+  newPassword: '',
+  newPasswordRepeat: ''
 })
+
+function updateUserData() {
+  loadingSave.value = true
+  userData.update(localUserData, 'STUDENT')
+    .finally(() => {
+      loadingSave.value = false
+    })
+}
+
+function changePassword() {
+  if (passwordChangeData.newPassword != passwordChangeData.newPasswordRepeat) {
+    snackbar.showError('Новый пароль не совпадает')
+    return
+  }
+
+  loadingSavePassword.value = true
+  userData.changePassword(
+    passwordChangeData.oldPassword,
+    passwordChangeData.newPassword,
+    'STUDENT'
+  ).finally(() => {
+    loadingSavePassword.value = false
+  })
+}
 </script>
