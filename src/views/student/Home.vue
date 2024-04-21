@@ -4,9 +4,11 @@
       <div class="w-full h-full place-items-center flex justify-center text-xl text-center" v-if="loadEntries">
         <Loading/>
       </div>
+
       <div v-else-if="entryStore.myEntries.length > 0" v-for="entry in entryStore.myEntries" :key="entry.id" class="entry-block">
         {{ weekdayNames[entry.selectedTime.weekday] }}: {{ entry.selectedTime.time }}
       </div>
+
       <div class="w-full min-h-72 h-full place-items-center gap-3 flex flex-col justify-center text-2xl text-center" v-else>
         <svg-icon class="text-primary h-20 w-20" type="mdi" :path="mdiFileDocumentRemove"></svg-icon>
         У вас отсутствуют записи
@@ -14,12 +16,21 @@
     </div>
 
     <div class="basis-1/2 bg-background rounded-md flex flex-col gap-4 p-4 overflow-auto min-h-72">
-      <div v-for="new_data in news" :key="new_data.id" class="new-block-back">
+      <div class="w-full h-full place-items-center flex justify-center text-xl text-center" v-if="loadNews">
+        <Loading/>
+      </div>
+
+      <div v-else-if="newsStore.gymNews.length > 0" v-for="newData in newsStore.gymNews" :key="newData.id" class="new-block-back">
         <div class="new-block-forward">
-          От: {{ new_data.date }}
+          От: {{ newData.createTime }}
           <br>
-          {{ new_data.text }}
+          {{ newData.body }}
         </div>
+      </div>
+
+      <div class="w-full min-h-72 h-full place-items-center gap-3 flex flex-col justify-center text-2xl text-center" v-else>
+        <svg-icon class="text-tertiary h-20 w-20" type="mdi" :path="mdiNewspaperRemove"></svg-icon>
+        Объявления отсутствуют
       </div>
     </div>
   </div>
@@ -28,20 +39,28 @@
 
 <script setup lang="ts">
 import SvgIcon from '@jamescoyle/vue-icon'
-import { mdiFileDocumentRemove } from '@mdi/js';
+import { mdiFileDocumentRemove, mdiNewspaperRemove } from '@mdi/js';
 
 import Loading from '@/components/ui/Loading.vue';
 import { onMounted, ref } from 'vue';
 import { useEntryStore } from '@/stores/entry'
+import { useNewsStore } from '@/stores/news'
 import { weekdayNames } from '@/Common';
 
-const loadEntries = ref(true)
 const entryStore = useEntryStore()
+const newsStore = useNewsStore()
+
+const loadEntries = ref(true)
+const loadNews = ref(true)
 
 onMounted(() => {
   entryStore.loadMyEntries()
     .finally(() => {
       loadEntries.value = false
+    })
+  newsStore.loadGymNews('STUDENT')
+    .finally(() => {
+      loadNews.value = false
     })
 })
 
