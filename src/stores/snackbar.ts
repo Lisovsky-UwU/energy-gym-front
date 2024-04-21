@@ -13,23 +13,23 @@ export const useSnackbarStore = defineStore('snackbar', {
             window.setTimeout(() => {this.show = false}, 5000)
         },
 
-        showError(text: string) {
+        showError(text: string, autoHide = true) {
             this.text = text
             this.color = 'error'
             this.show = true
-            this.setTimeOut()
+            if (autoHide) this.setTimeOut()
         },
-        showSuccess(text: string) {
+        showSuccess(text: string, autoHide = true) {
             this.text = text
             this.color = 'success'
             this.show = true
-            this.setTimeOut()
+            if (autoHide) this.setTimeOut()
         },
-        showWarning(text: string) {
+        showWarning(text: string, autoHide = true) {
             this.text = text
             this.color = 'warning'
             this.show = true
-            this.setTimeOut()
+            if (autoHide) this.setTimeOut()
         },
 
         hide() {

@@ -11,7 +11,10 @@ module.exports = {
         primary: '#3acf61',
         second: '#1d2e41',
         accent: '#77b379',
-        tertiary: '#3ea0d6',
+        tertiary: {
+          DEFAULT: '#3ea0d6',
+          hover: '#77bbe0',
+        },
 
         'select-entry': {
           1: '#8dcf43',
