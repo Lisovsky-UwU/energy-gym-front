@@ -17,10 +17,22 @@ interface BaseResponse {
     data: any
 }
 
-
 interface UserLoginResponse {
     token: string,
     userData: UserData
+}
+
+interface CheckStudentCardResponse {
+    alreadyExists: boolean
+}
+
+interface RegistrationRequest {
+    studentCard: number,
+    password: string,
+    firstname: string,
+    secondname: string,
+    surname: string,
+    group: string,
 }
 
 
@@ -36,6 +48,11 @@ export const useApiStudentStore = defineStore('apiStudent', {
     },
 
     actions: {
+        async checkStudentCard(studentCard: number): Promise<boolean> {
+            const result: CheckStudentCardResponse = await this.doRequest('/auth/check-studcard', 'POST', { studentCard })
+            return result.alreadyExists
+        },
+
         async checkLogin() {
             this.studentToken = localStorage.getItem('studentToken')
             if (this.studentToken != null) {
@@ -46,6 +63,13 @@ export const useApiStudentStore = defineStore('apiStudent', {
 
         async login(login: string, password: string) {
             const result: UserLoginResponse = await this.doRequest('/auth/login', 'POST', {'login': login, 'password': password})
+            this.studentToken = result.token
+            userData.set(result.userData)
+            localStorage.setItem('studentToken', this.studentToken)
+        },
+
+        async registrate(payload: RegistrationRequest) {
+            const result: UserLoginResponse = await this.doRequest('/auth/signup', 'POST', payload)
             this.studentToken = result.token
             userData.set(result.userData)
             localStorage.setItem('studentToken', this.studentToken)
