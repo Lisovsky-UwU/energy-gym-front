@@ -7,12 +7,13 @@
         </router-link>
         <form class="gap-4 grid grid-cols-1" @submit.prevent="login()">
           <div class="">
-            <ui-input label="Логин" placeholder="12345678" v-model="loginText" required/>
+            <ui-input label="Логин" placeholder="12345678" v-model="loginData.login" required/>
           </div>
           <div>
-            <ui-input type="password" label="Пароль" placeholder="*******" v-model="passwordText" required/>
+            <ui-input type="password" label="Пароль" placeholder="*******" v-model="loginData.password" required/>
           </div>
-          <button class="btn-custom" type="submit">
+          <button :disabled="loading" :class="loading ? 'btn-custom-load' : 'btn-custom'" type="submit">
+            <LoadingSmall v-if="loading"/>
             Войти
           </button>
         </form>
@@ -22,17 +23,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import UiInput from '@/components/ui/Input.vue'
+import LoadingSmall from '@/components/ui/LoadingSmall.vue';
+import { ref, reactive } from 'vue'
 import { useApiCoachStore } from '@/stores/api';
 
 const api = useApiCoachStore()
 
-const loginText = ref('')
-const passwordText = ref('')
+const loading = ref(false)
+const loginData = reactive({
+  login: '',
+  password: ''
+})
 
-async function login() {
-  await api.login(loginText.value, passwordText.value)
+function login() {
+  loading.value = true
+  api.login(loginData.login, loginData.password)
+    .finally(() => {
+      loading.value = false
+    })
 }
 </script>
 

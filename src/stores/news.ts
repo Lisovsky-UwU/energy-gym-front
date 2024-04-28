@@ -20,6 +20,14 @@ export const useNewsStore = defineStore('news', {
     actions: {
         async loadGymNews(role: string) {
             this.gymNews = await (role == 'STUDENT' ? apiStudent : apiCoach).doRequest('/gym-news/get', 'GET')
+        },
+
+        async create(body: string) {
+            this.gymNews.push(await apiCoach.doRequest('/gym-news/create', 'POST', { body: body }))
+        },
+
+        async delete(id: number) {
+            await apiCoach.doRequest('/gym-news/delete', 'DELETE', { id: id })
         }
     }
 })

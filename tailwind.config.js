@@ -10,7 +10,7 @@ module.exports = {
         background: '#edeff5',
         primary: '#3acf61',
         second: '#1d2e41',
-        accent: '#77b379',
+        accent: '#70db8c',
         tertiary: {
           DEFAULT: '#3ea0d6',
           hover: '#77bbe0',

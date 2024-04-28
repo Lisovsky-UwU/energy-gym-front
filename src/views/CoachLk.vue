@@ -6,7 +6,7 @@
     </router-link>
 
     <div class="relative bg-background min-w-80 sm:max-w-80 rounded-md flex items-center pt-8 flex-col overflow-auto min-h-[600px] sm:min-h-0">
-      <router-link to="/coach/profile-settings" class="absolute right-5 rounded-3xl bg-second text-white p-2 shadow-md">
+      <router-link to="/coach/profile-settings" class="absolute right-5 rounded-3xl bg-second text-white p-2 shadow-md hover:bg-slate-600 transition-all">
         <svg-icon type="mdi" :path="mdiPencil"></svg-icon>
       </router-link>
       <img src="@/assets/default_avatar.svg" alt="default_avatar" class="h-44">
