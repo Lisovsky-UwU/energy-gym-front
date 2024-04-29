@@ -3,40 +3,46 @@
     <!--------------------------------------- ПОСЕЩЕНИЯ --------------------------------------->
     <div class="basis-1/2 bg-background rounded-md relative flex flex-col gap-4 p-4 overflow-visible sm:overflow-auto min-h-72 place-items-center">
       <div class="flex flex-row gap-4">
-        <input class="bg-second text-white p-3 rounded-md shadow-md" type="date" id="start" name="trip-start" value="2024-04-02" min="2024-01-01" max="2024-12-31" />
+        <input class="bg-second text-white p-3 rounded-md shadow-md" type="date" id="start" name="trip-start" v-model="selectedDate.date" @change="doLoadVisits()"/>
 
-        <select 
-          class="text-white rounded-md py-2 px-4 bg-second shadow-md" 
-          :name="`visit-${index}`" 
-          :id="`visit-${index}`"
-        >
-          <option selected value="16:00">16:00</option>
+        <select class="text-white rounded-md py-2 px-4 bg-second shadow-md" v-model="selectedDate.time" @change="doLoadVisits()">
+          <option value="16:00">16:00</option>
           <option value="17:30">17:30</option>
           <option value="19:00">19:00</option>
           <option value="20:30">20:30</option>
         </select>
       </div>
 
-      <div v-for="index in 12" :key="index" class="w-full flex gap-2">
+      <div class="w-full h-full place-items-center flex justify-center text-xl text-center" v-if="loading.visits">
+        <Loading/>
+      </div>
+
+      <div v-for="visit in visitStore.visits" :key="visit.id" class="w-full flex gap-2" v-else-if="visitStore.visits.length > 0" >
         <div class="entry-block grow">
-          <span class="text-lg">Иванов Иван Иванович</span>
+          <span class="text-lg">{{ visit.user.secondname }} {{ visit.user.firstname }} {{ visit.user.surname }}</span>
         </div>
         <select 
-          :class="`text-white rounded-md p-1 shadow-md ${bgColor[selected[index]]}`" 
-          :name="`visit-${index}`" 
-          :id="`visit-${index}`"
-          v-model="selected[index]"
+          :class="`text-white rounded-md p-1 shadow-md ${bgColor[visit.mark]}`" 
+          :name="`visit-${visit.id}`" 
+          :id="`visit-${visit.id}`"
+          v-model="visit.mark"
+          @change="updateVisit(visit.id, Number($event.target?.value))"
         >
-          <option value="1">Присутствует</option>
-          <option value="2">Уважительная</option>
-          <option value="0">Отсутствует</option>
+          <option :value="1">Присутствует</option>
+          <option :value="2">Уважительная</option>
+          <option :value="0">Отсутствует</option>
         </select>
+      </div>
+
+      <div class="w-full min-h-72 h-full place-items-center gap-3 flex flex-col justify-center text-2xl text-center" v-else>
+        <svg-icon class="text-primary h-20 w-20" type="mdi" :path="mdiNoteOffOutline"></svg-icon>
+        На данный день отсутствуют записи студентов
       </div>
     </div>
 
     <!--------------------------------------- ОБЪЯВЛЕНИЯ --------------------------------------->
     <div class="basis-1/2 flex flex-col bg-background rounded-md min-h-72 relative overflow-auto">
-      <div class="w-full h-full place-items-center flex justify-center text-xl text-center" v-if="loadNews">
+      <div class="w-full h-full place-items-center flex justify-center text-xl text-center" v-if="loading.news">
         <Loading/>
       </div>
 
@@ -61,12 +67,12 @@
         Объявления отсутствуют
       </div>
 
-      <div v-if="!loadNews" class="grow"></div>
+      <div v-if="!loading.news" class="grow"></div>
 
-      <form v-if="!loadNews" class="w-full bg-second flex flex-row py-3 px-3 rounded-b-md" @submit.prevent="createNew()">
+      <form v-if="!loading.news" class="w-full bg-second flex flex-row py-3 px-3 rounded-b-md" @submit.prevent="createNew()">
         <ui-input placeholder="Текст объявления" v-model="newText" class="w-full text-lg"></ui-input>
-        <button :disabled="loadCreateNew" type="submit" class="text-white p-3 ml-3 rounded-md transition-all" :class="loadCreateNew ? '' : 'hover:bg-white hover:bg-opacity-15'">
-          <LoadingSmall v-if="loadCreateNew"/>
+        <button :disabled="loading.createNew" type="submit" class="text-white p-3 ml-3 rounded-md transition-all" :class="loading.createNew ? '' : 'hover:bg-white hover:bg-opacity-15'">
+          <LoadingSmall v-if="loading.createNew"/>
           <svg-icon v-else class="h-8 w-8" type="mdi" :path="mdiSend"></svg-icon>
         </button>
       </form>
@@ -80,11 +86,11 @@
         Вы уверены что хотите удалить новость?
       </span>
       <div class="flex place-content-center gap-2">
-        <button :disabled="loadDeleteNew" class="text-white text-xl px-6 py-2 rounded-md transition-all bg-red-600" :class="loadDeleteNew ? '' : 'hover:bg-red-400'" @click="confirmDeleteNew()">
-          <LoadingSmall v-if="loadDeleteNew"/>
+        <button :disabled="loading.deleteNew" class="text-white text-xl px-6 py-2 rounded-md transition-all bg-red-600" :class="loading.deleteNew ? '' : 'hover:bg-red-400'" @click="confirmDeleteNew()">
+          <LoadingSmall v-if="loading.deleteNew"/>
           Удалить
         </button>
-        <button :disabled="loadDeleteNew" class="text-white text-xl px-6 py-2 rounded-md transition-all bg-second" :class="loadDeleteNew ? '' : 'hover:bg-slate-600'" @click="showConfirmDelete = false">
+        <button :disabled="loading.deleteNew" class="text-white text-xl px-6 py-2 rounded-md transition-all bg-second" :class="loading.deleteNew ? '' : 'hover:bg-slate-600'" @click="showConfirmDelete = false">
           Отмена
         </button>
       </div>
@@ -95,24 +101,34 @@
 
 <script setup lang="ts">
 import SvgIcon from '@jamescoyle/vue-icon'
-import { mdiSend, mdiNewspaperRemove, mdiClose } from '@mdi/js';
+import { mdiNoteOffOutline, mdiNewspaperRemove, mdiSend, mdiClose } from '@mdi/js';
 
 import UiInput from '@/components/ui/Input.vue'
 import Loading from '@/components/ui/Loading.vue';
 import LoadingSmall from '@/components/ui/LoadingSmall.vue';
 import ModalDialog from '@/components/ui/ModalDialog.vue'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, reactive } from 'vue'
 import { useNewsStore } from '@/stores/news'
 import { useSnackbarStore } from '@/stores/snackbar';
+import { useVisitStore } from '@/stores/visit'
 
 const newsStore = useNewsStore()
 const snackbar = useSnackbarStore()
+const visitStore = useVisitStore()
 
-const loadNews = ref(true)
-const loadCreateNew = ref(false)
-const loadDeleteNew = ref(false)
+let loading = reactive({
+  visits: true,
+  news: true,
+  createNew: false,
+  deleteNew: false
+})
+
 const showConfirmDelete = ref(false)
 const deletedNewId = ref(-1)
+const selectedDate = reactive({
+  date: new Date().toJSON().slice(0, 10),
+  time: '16:00'
+})
 
 const bgColor = {
   0: 'bg-red-600',
@@ -122,30 +138,28 @@ const bgColor = {
 
 const newText = ref('')
 
-const selected = ref({
-  1: 0,
-  2: 0,
-  3: 0,
-  4: 0,
-  5: 0,
-  6: 0,
-  7: 0,
-  8: 0,
-  9: 0,
-  10: 0,
-  11: 0,
-  12: 0,
-})
-
 onMounted(() => {
+  doLoadVisits()
   doLoadNews()
 })
 
+function doLoadVisits() {
+  loading.visits = true
+  visitStore.loadForDate(selectedDate.date, selectedDate.time)
+    .finally(() => {
+      loading.visits = false
+    })
+}
+
+async function updateVisit(visitId: number, mark: number) {
+  await visitStore.updateVisit(visitId, mark)
+}
+
 function doLoadNews() {
-  loadNews.value = true
+  loading.news = true
   newsStore.loadGymNews('COACH')
     .finally(() => {
-      loadNews.value = false
+      loading.news = false
     })
 }
 
@@ -156,13 +170,13 @@ function createNew() {
     return
   }
 
-  loadCreateNew.value = true
+  loading.createNew = true
   newsStore.create(trimedStr)
     .then(() => {
       newText.value = ''
     })
     .finally(() => {
-      loadCreateNew.value = false
+      loading.createNew = false
     })
 }
 
@@ -172,14 +186,14 @@ function btnDeleteNew(newId: number) {
 }
 
 function confirmDeleteNew() {
-  loadDeleteNew.value = true
+  loading.deleteNew = true
   newsStore.delete(deletedNewId.value)
     .then(() => {
       showConfirmDelete.value = false
       doLoadNews()
     })
     .finally(() => {
-      loadDeleteNew.value = false
+      loading.deleteNew = false
     })
 }
 </script>
