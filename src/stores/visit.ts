@@ -4,7 +4,7 @@ import { useApiCoachStore } from './api'
 const api = useApiCoachStore()
 
 
-interface Visit {
+export interface Visit {
     id: number,
     date: string,
     user: {

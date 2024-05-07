@@ -18,7 +18,7 @@
       </div>
 
       <div v-for="visit in visitStore.visits" :key="visit.id" class="w-full flex gap-2" v-else-if="visitStore.visits.length > 0" >
-        <div class="entry-block grow">
+        <div class="entry-block grow cursor-pointer" @click="doShowStudentInfo(visit)">
           <span class="text-lg">{{ visit.user.secondname }} {{ visit.user.firstname }} {{ visit.user.surname }}</span>
         </div>
         <select 
@@ -96,6 +96,21 @@
       </div>
     </div>
   </ModalDialog>
+
+  <!--------------------------------------- ДИАЛОГ С ИНФОЙ О СТУДЕНТЕ --------------------------------------->
+  <ModalDialog v-model="showStudentInfo">
+    <div class="flex flex-col gap-5 pt-5 rounded-md bg-background">
+      <div class="flex flex-row px-6 gap-6">
+        <img src="@/assets/default_avatar.svg" alt="default_avatar" class="h-44">
+        <div class="flex flex-col gap-3 text-left text-xl justify-center">
+          <span>Студенческий: {{ selectedVisit.user.studentCard }}</span>
+          <span>{{ selectedVisit.user.secondname }} {{ selectedVisit.user.firstname }} {{ selectedVisit.user.surname }}</span>
+          <span>Группа: {{ selectedVisit.user.group }}</span>
+        </div>
+      </div>
+      <button class="w-full bg-second text-white rounded-b-md text-xl py-3" @click="showStudentInfo = false">Закрыть</button>
+    </div>
+  </ModalDialog>
 </template>
 
 
@@ -110,7 +125,7 @@ import ModalDialog from '@/components/ui/ModalDialog.vue'
 import { ref, onMounted, reactive } from 'vue'
 import { useNewsStore } from '@/stores/news'
 import { useSnackbarStore } from '@/stores/snackbar';
-import { useVisitStore } from '@/stores/visit'
+import { useVisitStore, type Visit } from '@/stores/visit'
 
 const newsStore = useNewsStore()
 const snackbar = useSnackbarStore()
@@ -124,6 +139,9 @@ let loading = reactive({
 })
 
 const showConfirmDelete = ref(false)
+const showStudentInfo = ref(false)
+let selectedVisit = reactive({}) as Visit
+
 const deletedNewId = ref(-1)
 const selectedDate = reactive({
   date: new Date().toJSON().slice(0, 10),
@@ -149,6 +167,11 @@ function doLoadVisits() {
     .finally(() => {
       loading.visits = false
     })
+}
+
+function doShowStudentInfo(visit: Visit) {
+  selectedVisit = reactive(visit)
+  showStudentInfo.value = true
 }
 
 async function updateVisit(visitId: number, mark: number) {
