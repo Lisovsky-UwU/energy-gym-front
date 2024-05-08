@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
-import { useApiStudentStore } from './api'
+import { useApiStudentStore, useApiCoachStore } from './api'
 
 const apiStudent = useApiStudentStore()
+const apiCoach = useApiCoachStore()
 
 
 interface Entry {
@@ -11,6 +12,25 @@ interface Entry {
         weekday: number,
         time: string,
         month: string
+    }
+}
+
+export interface EntryExtend {
+    id: number,
+    selectedTime: {
+        id: number,
+        weekday: number,
+        time: string,
+        month: string
+    },
+    user: {
+        id: number,
+        studentCard: number,
+        firstname: string,
+        secondname: string,
+        surname: string
+        group: string,
+        role: string,
     }
 }
 
@@ -36,6 +56,9 @@ export const useEntryStore = defineStore('entry', {
         },
         async createEntries(idsSelectedAvTimes: Array<number>): Promise<Array<EntryCreateResponse>> {
             return await apiStudent.doRequest('/entry/create', 'POST', {selectedTimes: idsSelectedAvTimes})
+        },
+        async getForDay(weekday: number, month: string): Promise<Array<EntryExtend>> {
+            return await apiCoach.doRequest('/entry/get-any', 'POST', { weekday: weekday, month: month })
         }
     }
 })
