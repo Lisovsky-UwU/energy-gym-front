@@ -55,8 +55,8 @@ const router = createRouter({
           props: true
         },
         {
-          path: 'support',
-          component: async () => await import('@/views/coach/Support.vue')
+          path: 'reports',
+          component: async () => await import('@/views/coach/Reports.vue')
         },
         {
           path: 'student-chats',

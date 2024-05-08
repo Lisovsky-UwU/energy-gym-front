@@ -30,9 +30,9 @@
           Связь со студентами
         </router-link>
 
-        <router-link to="/coach/support" class="menu-btn bg-menu-btn-4 hover:bg-menu-btn-4-hover">
-          <svg-icon type="mdi" :path="mdiHeadset"></svg-icon>
-          Поддержка
+        <router-link to="/coach/reports" class="menu-btn bg-menu-btn-4 hover:bg-menu-btn-4-hover">
+          <svg-icon type="mdi" :path="mdiChartBox"></svg-icon>
+          Отчеты
         </router-link>
 
         <button class="menu-btn bg-menu-btn-5 hover:bg-menu-btn-5-hover" @click="api.logout()">
@@ -57,7 +57,7 @@
 <script setup lang="ts">
 import SvgIcon from '@jamescoyle/vue-icon'
 import { RouterView } from 'vue-router'
-import { mdiPencil, mdiNewspaper, mdiFileDocumentEdit, mdiPhoneInTalk, mdiHeadset, mdiArrowLeftThick } from '@mdi/js';
+import { mdiPencil, mdiNewspaper, mdiFileDocumentEdit, mdiPhoneInTalk, mdiChartBox, mdiArrowLeftThick } from '@mdi/js';
 import { useApiCoachStore } from '@/stores/api';
 import { useUserDataStore } from '@/stores/user';
 import { userRole } from '@/Common.ts'
