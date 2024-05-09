@@ -189,8 +189,12 @@ export const useApiCoachStore = defineStore('apiCoach', {
                 let e = new Error(`(${rJson.errorType}) ${rJson.errorMessage}`)
                 throw e
             } else {
-                const rJson: BaseResponse = await r.json()
-                return rJson.data
+                if (r.headers.get('Content-Type') == 'application/json') {
+                    const rJson: BaseResponse = await r.json()
+                    return rJson.data
+                } else {
+                    return await r.blob()
+                }
             }
         }
     }
