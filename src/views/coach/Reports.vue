@@ -39,7 +39,6 @@ import UiInput from '@/components/ui/Input.vue'
 import { ref } from 'vue';
 import { useApiCoachStore } from '@/stores/api';
 import { useSnackbarStore } from '@/stores/snackbar';
-import { start } from 'repl';
 
 const loadingReport = ref(false)
 
