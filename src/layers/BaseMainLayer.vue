@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col bg-second">
+  <div class="flex flex-col bg-second min-h-screen">
     <div class="py-5 bg-second flex flex-row place-items-center px-5 gap-2">
       <img src="@/assets/logo_without_back.png" alt="logo" class="h-16">
       <span class="text-white text-[42px] ml-4 font-bold">Энергия</span>
@@ -20,32 +20,39 @@
       Дорогие студенты, приглашаем вас в спортивный зал “Энергия”, в который вы можете записаться, перейдя в <router-link to="/lk" class="link-custom">личный кабинет</router-link>.
       <br>
       Если у вас имеются вопросы или пожелания, пишите на почту <a class="link-custom" href="mailto:energycats@gmail.com">energycats@gmail.com</a>.
-      <br>
-      Также для записи Вы можете воспользваться <a class="link-custom" href="#">мобильным приложением</a>.
     </div>
     
-    <div class="bg-gray-600 overflow-auto p-5 flex flex-row gap-5">
-      <img class="h-[500px]" src="@/assets/mobile-screen/1.png" alt="Mobile screen 1">
-      <img class="h-[500px]" src="@/assets/mobile-screen/2.png" alt="Mobile screen 2">
-      <img class="h-[500px]" src="@/assets/mobile-screen/3.png" alt="Mobile screen 3">
-      <img class="h-[500px]" src="@/assets/mobile-screen/4.png" alt="Mobile screen 4">
-      <img class="h-[500px]" src="@/assets/mobile-screen/5.png" alt="Mobile screen 5">
-      <img class="h-[500px]" src="@/assets/mobile-screen/6.png" alt="Mobile screen 6">
-      <img class="h-[500px]" src="@/assets/mobile-screen/7.png" alt="Mobile screen 7">
-    </div>
+    <div class="bg-gray-600 w-full h-4"></div>
 
     <div class="p-9">
       <span class="text-white text-xl">Новости спортивного зала</span>
-      <div class="new-block-back mt-3">
+
+      <div v-if="loadNews" class="new-block-back mt-3">
+        <div class="new-block-forward text-lg flex flex-col gap-3">
+          <div class="h-3 w-64 bg-slate-700 rounded animate-pulse"></div>
+          <div class="h-3 bg-slate-700 rounded animate-pulse"></div>
+          <div class="h-3 w-80 bg-slate-700 rounded animate-pulse"></div>
+        </div>
+      </div>
+
+      <div v-for="newData in news" class="new-block-back mt-3">
         <div class="new-block-forward text-lg">
-          От: 08.12.2023
+          От: {{ newData.createTime }}
           <br>
-          Дорогие посетители спортивного зала, 15.12.2023 состоится соревнования по волейболу. Всем желающим принять участие необходимо связаться с тренером или обратиться на кафедру физической культуры в кабинет №2.
+          {{ newData.body }}
+        </div>
+      </div>
+
+      <div v-if="news.length == 0 && !loadNews" class="new-block-back mt-3">
+        <div class="new-block-forward text-lg">
+          <span>Новостей нет</span>
         </div>
       </div>
     </div>
 
-    <div class="relative bg-gray-500 text-white flex flex-col p-6 place-items-center gap-6">
+    <div class="grow"></div>
+
+    <div class="relative bg-gray-600 text-white flex flex-col p-6 place-items-center gap-6">
       <div class="flex gap-4 sm:gap-48 flex-col sm:flex-row">
         <div>
           Адрес: 630108 г. Новосибирск ул. Плахотного 8/1 <br>
@@ -73,6 +80,20 @@
 <script lang="ts" setup>
 import SvgIcon from '@jamescoyle/vue-icon'
 import { mdiAccount } from '@mdi/js';
+import { onMounted, ref } from 'vue';
+
+const loadNews = ref(true)
+let news = ref([] as any)
+
+onMounted(() => {
+  fetch('/api/v1/new/get', { method: 'GET' })
+  .then(async (resp) => {
+      news.value = (await resp.json())['data']
+    })
+  .finally(() => {
+    loadNews.value = false
+  })
+})
 </script>
 
 <style scoped>
