@@ -68,7 +68,7 @@ async function generateExcel() {
   try {
     saveBlob(
       await api.doRequest('/report/visits', 'POST', body),
-      'test.xlsx'
+      `Посещения с ${startDate.value} по ${endDate.value}.xlsx`
     )
   } finally {
     loadingReport.value = false
