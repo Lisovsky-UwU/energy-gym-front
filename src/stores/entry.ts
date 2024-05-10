@@ -5,7 +5,7 @@ const apiStudent = useApiStudentStore()
 const apiCoach = useApiCoachStore()
 
 
-interface Entry {
+export interface Entry {
     id: number,
     selectedTime: {
         id: number,
@@ -48,8 +48,11 @@ export const useEntryStore = defineStore('entry', {
     }),
 
     actions: {
-        async loadMyEntries(): Promise<void> {
-            this.myEntries = await apiStudent.doRequest('/entry/get', 'GET')
+        async loadMyEntries(month: string): Promise<void> {
+            this.myEntries = await apiStudent.doRequest('/entry/get', 'POST', { month: month })
+        },
+        async deleteMyEntry(id: number) {
+            await apiStudent.doRequest('/entry/delete', 'DELETE', { id: id })
         },
         async loadOpen() {
             this.registrateIsOpen = (await apiStudent.doRequest('/entry/check-open', 'GET')).status
