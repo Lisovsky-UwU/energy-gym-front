@@ -14,7 +14,7 @@
         <svg-icon type="mdi" :path="mdiAccount"></svg-icon>
       </router-link>
     </div>
-    <div class="parallax-element h-[450px] w-full bg-fixed"></div>
+    <div class="parallax-element h-[450px] bg-center w-full bg-fixed"></div>
 
     <div class="text-white p-9 text-xl font-normal">
       Дорогие студенты, приглашаем вас в спортивный зал “Энергия”, в который вы можете записаться, перейдя в <router-link to="/lk" class="link-custom">личный кабинет</router-link>.
@@ -99,7 +99,20 @@ onMounted(() => {
 <style scoped>
 .parallax-element {
   background-image: url('@/assets/login_back.jpg');
-  background-position-y: 85%;
+  background-position-y: -100px;
   background-size: cover;
+}
+
+
+@media (min-width: 768px) {
+  .parallax-element {
+    background-position-y: -10em;
+  }
+}
+
+@media (min-width: 1280px) {
+  .parallax-element {
+    background-position-y: 100%;
+  }
 }
 </style>

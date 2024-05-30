@@ -16,6 +16,9 @@
             <LoadingSmall v-if="loading"/>
             Войти
           </button>
+          <router-link :to="loading ? '/coach' : '/lk'" :class="'bg-blue-500 text-white px-4 py-2 rounded-md transition-all text-center block ' + (loading ? '' : 'hover:bg-blue-400')">
+            Для студента
+          </router-link>
         </form>
       </div>
     </div>
