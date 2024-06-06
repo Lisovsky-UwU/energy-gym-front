@@ -40,10 +40,16 @@ interface EntryCreateResponse {
     text: string | null
 }
 
+interface OpenEntryCheck {
+    status: boolean,
+    openingDay: number
+}
+
 
 export const useEntryStore = defineStore('entry', {
     state: () => ({
         myEntries: [] as Array<Entry>,
+        openingDay: 0,
         registrateIsOpen: false
     }),
 
@@ -55,7 +61,9 @@ export const useEntryStore = defineStore('entry', {
             await apiStudent.doRequest('/entry/delete', 'DELETE', { id: id })
         },
         async loadOpen() {
-            this.registrateIsOpen = (await apiStudent.doRequest('/entry/check-open', 'GET')).status
+            let openData: OpenEntryCheck = await apiStudent.doRequest('/entry/check-open', 'GET')
+            this.openingDay = openData.openingDay
+            this.registrateIsOpen = openData.status
         },
         async createEntries(idsSelectedAvTimes: Array<number>): Promise<Array<EntryCreateResponse>> {
             return await apiStudent.doRequest('/entry/create', 'POST', {selectedTimes: idsSelectedAvTimes})

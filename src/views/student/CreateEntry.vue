@@ -39,7 +39,7 @@
     <div v-else class="flex flex-col gap-3 items-center sm:h-full sm:absolute justify-center text-2xl py-6 w-full">
       <svg-icon class="text-primary h-20 w-20" type="mdi" :path="mdiLockClock"></svg-icon>
       <span class="text-center">
-        Запись закрыта. Откроется 25 числа.
+        Запись закрыта. Откроется {{ entryStore.openingDay }} числа.
       </span>
     </div>
 
