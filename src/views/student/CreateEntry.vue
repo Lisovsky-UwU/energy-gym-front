@@ -8,6 +8,14 @@
       <Loading/>
     </div>
 
+    <div v-else-if="userData.role == 'BLOCKED'" class="flex flex-col gap-3 items-center sm:h-full sm:absolute justify-center text-2xl py-6 w-full">
+      <svg-icon class="text-red-600 h-20 w-20" type="mdi" :path="mdiAccountCancel"></svg-icon>
+      <span class="text-center">
+        Вы были заблокированы за пропуски занятий<br>
+        Вы не сможете записаться на следующий месяц
+      </span>
+    </div>
+
     <div v-else-if="entryStore.registrateIsOpen">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 p-4 place-items-stretch pb-[78px]">
         <div v-for="weekday in avtimeStore.mappedAvTimesAboutWeekdays" :key="'wd-' + weekday.id" class="bg-white shadow-md rounded-md text-center grid grid-cols-2 grid-rows-3 p-4 gap-2 border border-gray-300">
@@ -46,11 +54,12 @@
 
 <script lang="ts" setup>
 import SvgIcon from '@jamescoyle/vue-icon'
-import { mdiLockClock } from '@mdi/js';
+import { mdiLockClock, mdiAccountCancel } from '@mdi/js';
 import MainBlockLkTemplate from '@/components/ui/MainBlockLkTemplate.vue'
 import Loading from '@/components/ui/Loading.vue';
 import LoadingSmall from '@/components/ui/LoadingSmall.vue';
 import { reactive, onMounted, ref } from 'vue'
+import { useUserDataStore } from '@/stores/user';
 import { useEntryStore } from '@/stores/entry';
 import { useAvailableTimeStore } from '@/stores/avtime'
 import { useSnackbarStore } from '@/stores/snackbar';
@@ -59,6 +68,7 @@ import { weekdayNames } from '@/Common';
 const entryStore = useEntryStore()
 const avtimeStore = useAvailableTimeStore()
 const snackbar = useSnackbarStore()
+const userData = useUserDataStore()
 
 const loading = ref(true)
 const loadingSave = ref(false)
@@ -66,12 +76,16 @@ let selectedTimes = reactive({} as any)
 
 
 onMounted(async () => {
-  try {
-    await entryStore.loadOpen()
-    if (entryStore.registrateIsOpen) {
-      await avtimeStore.loadAvailableTimes()
+  if (userData.role != 'BLOCKED') {
+    try {
+      await entryStore.loadOpen()
+      if (entryStore.registrateIsOpen) {
+        await avtimeStore.loadAvailableTimes()
+      }
+    } finally {
+      loading.value = false
     }
-  } finally {
+  } else {
     loading.value = false
   }
 })

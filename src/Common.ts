@@ -1,7 +1,8 @@
 export const userRole = {
     'No data': 'No data',
     'STUDENT': 'Студент',
-    'COACH': 'Тренер'
+    'COACH': 'Тренер',
+    'BLOCKED': 'Заблокирован'
 } as any
 
 export const weekdayNames = {
