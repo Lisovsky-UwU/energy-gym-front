@@ -44,6 +44,9 @@ export const useApiStudentStore = defineStore('apiStudent', {
     getters: {
         isLogin(): boolean {
             return this.studentToken != null
+        },
+        token(): string {
+            return this.studentToken || ""
         }
     },
 
@@ -131,6 +134,9 @@ export const useApiCoachStore = defineStore('apiCoach', {
         isLogin(): boolean {
             return this.coachToken != null
         },
+        token(): string {
+            return this.coachToken || ""
+        }
     },
 
     actions: {

@@ -19,7 +19,11 @@ export default defineConfig({
       '/api/v1': {
         target: 'http://127.0.0.1:5020',
         changeOrigin: true,
-      }
+      },
+      '/media': {
+        target: 'http://127.0.0.1:5020',
+        changeOrigin: true,
+      },
     }
   }
 })

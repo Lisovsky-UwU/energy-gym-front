@@ -9,7 +9,10 @@
       <router-link to="/lk/profile-settings" class="absolute right-5 rounded-3xl bg-second text-white p-2 shadow-md hover:bg-slate-600 transition-all">
         <svg-icon type="mdi" :path="mdiPencil"></svg-icon>
       </router-link>
-      <img src="@/assets/default_avatar.svg" alt="default_avatar" class="h-44">
+      <img src="@/assets/default_avatar.svg" alt="default_avatar" class="h-44" v-if="userData.image == null">
+      <div v-else class="circle-image">
+        <img :src="'/media/' + userData.image">
+      </div>
       <div class="mt-4 text-center">
         <p class="text-lg">{{ userData.fullname }}</p>
         <p class="text-lg">Группа: {{ userData.userData?.group }}</p>

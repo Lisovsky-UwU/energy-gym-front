@@ -106,7 +106,10 @@
   <ModalDialog v-model="showStudentInfo">
     <div class="flex flex-col gap-5 pt-5 rounded-md bg-background">
       <div class="flex flex-row px-6 gap-6">
-        <img src="@/assets/default_avatar.svg" alt="default_avatar" class="h-44">
+        <img src="@/assets/default_avatar.svg" alt="default_avatar" class="h-44" v-if="selectedVisit.user.image == null">
+        <div v-else class="circle-image">
+          <img :src="'/media/' + selectedVisit.user.image">
+        </div>
         <div class="flex flex-col gap-3 text-left text-xl justify-center">
           <span>Студенческий: {{ selectedVisit.user.studentCard }}</span>
           <span>{{ selectedVisit.user.secondname }} {{ selectedVisit.user.firstname }} {{ selectedVisit.user.surname }}</span>

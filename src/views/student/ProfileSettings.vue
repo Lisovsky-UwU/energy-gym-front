@@ -7,7 +7,9 @@
       <ui-input label="Студенческий билет" v-model="localUserData.studentCard" readonly/>
       <ui-input label="Группа" v-model="localUserData.group"/>
       <div class="flex place-items-center justify-center">
-        <button class="btn-custom">
+        <input type="file" id="fileInput" hidden @change="loadNewPhoto" accept=".jpg,.png,.bmp">
+        <button :disabled="loadingUpdateImage" :class="loadingUpdateImage ? 'btn-custom-load' : 'btn-custom'" class="btn-custom" @click="updatePhoto">
+          <LoadingSmall v-if="loadingUpdateImage"/>
           Выбрать фото
         </button>
       </div>
@@ -52,6 +54,7 @@ const snackbar = useSnackbarStore()
 
 const loadingSave = ref(false)
 const loadingSavePassword = ref(false)
+const loadingUpdateImage = ref(false)
 const localUserData = reactive({...userData.userData}) as UserData
 
 const passwordChangeData = reactive({
@@ -82,5 +85,18 @@ function changePassword() {
   ).finally(() => {
     loadingSavePassword.value = false
   })
+}
+
+function updatePhoto() {
+  const inputElement = document.getElementById("fileInput")
+  inputElement?.click()
+}
+
+function loadNewPhoto(event: any) {
+  loadingUpdateImage.value = true
+  userData.loadNewPhoto(event, 'STUDENT')
+    .finally(() => {
+      loadingUpdateImage.value = false
+    })
 }
 </script>

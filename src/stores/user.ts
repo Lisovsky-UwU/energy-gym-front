@@ -11,6 +11,7 @@ export interface UserData {
     surname: string
     group: string,
     role: string,
+    image: string | null
 }
 
 
@@ -31,6 +32,9 @@ export const useUserDataStore = defineStore('userData', {
         },
         studentCard(): number {
             return this.userData?.studentCard || -1
+        },
+        image(): string | null {
+            return this.userData?.image || null
         }
     },
 
@@ -39,8 +43,47 @@ export const useUserDataStore = defineStore('userData', {
             this.userData = data
         },
 
+        updateImage(imgName: string | undefined) {
+            this.userData = {
+                ...this.userData,
+                image: imgName
+            }
+        },
+
         invalidate() {
             this.userData = null
+        },
+
+        async loadNewPhoto(event: any, userRole: string) {
+            const file = event.target.files[0]
+            if (!file.type.startsWith('image/')) {
+                snackbar.showError('Загружаемый файл должен быть картинкой')
+                return
+            }
+
+            const fd = new FormData()
+            fd.append('image', file)
+            
+            try {
+                const api = await import('./api')
+                let userApi = userRole == 'STUDENT' ? api.useApiStudentStore() : api.useApiCoachStore()
+
+                const resp = await fetch('/media/update-my-picture', {
+                    method: 'POST',
+                    headers: { 'Authorization': userApi.token } as any,
+                    body: fd
+                })
+
+                if (resp.status == 200) {
+                    snackbar.showSuccess('Новое изображение успешно загружено')
+                    const json = await resp.json() as any
+                    this.updateImage(json.imgName)
+                } else {
+                    snackbar.showError('Возникла ошибка при загрузке изображения')
+                }
+            } catch {
+                snackbar.showError('Возникла ошибка при загрузке изображения')
+            }
         },
 
         async update(newData: UserData, userRole: string) {

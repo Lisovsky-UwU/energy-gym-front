@@ -15,6 +15,7 @@ export interface Visit {
         surname: string
         group: string,
         role: string,
+        image: string | null
     },
     mark: number
 }
