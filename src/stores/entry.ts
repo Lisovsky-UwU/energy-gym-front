@@ -53,6 +53,23 @@ export const useEntryStore = defineStore('entry', {
         registrateIsOpen: false
     }),
 
+    getters: {
+        forCallendarMapped(): any {
+            var result = [] as any
+            this.myEntries.map((e) => {
+                result.push(
+                    {
+                        description: 'Занятие в ' + e.selectedTime.time,
+                        isComplete: false,
+                        dates: { repeat: { weekdays: e.selectedTime.weekday + 2 } },
+                        color: 'red'
+                    }
+                )
+            })
+            return result
+        }
+    },
+
     actions: {
         async loadMyEntries(month: string): Promise<void> {
             this.myEntries = await apiStudent.doRequest('/entry/get', 'POST', { month: month })

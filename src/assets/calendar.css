@@ -1,0 +1,91 @@
+.vc-dark {
+    /* Base */
+    --vc-color: var(--vc-white);
+    --vc-bg: var(--vc-gray-900);
+    --vc-border: var(--vc-gray-700);
+    --vc-hover-bg: hsla(216, 15%, 52%, 0.3);
+    --vc-focus-ring: 0 0 0 2px rgb(59 130 246 / 0.7);
+    /* Calendar header */
+    --vc-header-arrow-color: var(--vc-gray-300);
+    --vc-header-arrow-hover-bg: var(--vc-gray-800);
+    --vc-header-title-color: var(--vc-gray-100);
+    /* Calendar weekdays */
+    --vc-weekday-color: var(--vc-accent-200);
+    /* Calendar weeknumbers */
+    --vc-weeknumber-color: var(--vc-gray-500);
+    /* Calendar nav */
+    --vc-nav-hover-bg: var(--vc-gray-700);
+    --vc-nav-title-color: var(--vc-gray-100);
+    --vc-nav-item-hover-box-shadow: none;
+    --vc-nav-item-active-color: var(--vc-white);
+    --vc-nav-item-active-bg: var(--vc-accent-500);
+    --vc-nav-item-active-box-shadow: none;
+    --vc-nav-item-current-color: var(--vc-accent-400);
+    /* Calendar day popover */
+    --vc-day-popover-container-color: var(--vc-gray-800);
+    --vc-day-popover-container-bg: var(--vc-white);
+    --vc-day-popover-container-border: var(--vc-gray-100);
+    --vc-day-popover-header-color: var(--vc-gray-300);
+    /* Popover content */
+    --vc-popover-content-color: var(--vc-white);
+    --vc-popover-content-bg: var(--vc-gray-800);
+    --vc-popover-content-border: var(--vc-gray-700);
+    /* Time picker */
+    --vc-time-picker-border: var(--vc-gray-700);
+    --vc-time-weekday-color: var(--vc-gray-400);
+    --vc-time-month-color: var(--vc-accent-400);
+    --vc-time-day-color: var(--vc-accent-400);
+    --vc-time-year-color: var(--vc-gray-500);
+    /* Time select group */
+    --vc-time-select-group-bg: var(--vc-gray-700);
+    --vc-time-select-group-border: var(--vc-gray-500);
+    --vc-time-select-group-icon-color: var(--vc-accent-400);
+    /* Base select */
+    --vc-select-color: var(--vc-gray-200);
+    --vc-select-bg: var(--vc-gray-700);
+    --vc-select-hover-bg: var(--vc-gray-600);
+    /* Calendar day */
+    --vc-day-content-hover-bg: var(--vc-hover-bg);
+    --vc-day-content-disabled-color: var(--vc-white);
+
+    /* Calendar attributes */
+    &.vc-attr,
+    & .vc-attr {
+        --vc-content-color: var(--vc-accent-500);
+        --vc-highlight-outline-bg: var(--vc-gray-900);
+        --vc-highlight-outline-border: var(--vc-accent-300);
+        --vc-highlight-outline-content-color: var(--vc-accent-200);
+        --vc-highlight-light-bg: var(--vc-accent-800);
+        --vc-highlight-light-content-color: var(--vc-accent-100);
+        --vc-highlight-solid-bg: var(--vc-accent-500);
+        --vc-highlight-solid-content-color: var(--vc-white);
+        --vc-dot-bg: var(--vc-accent-500);
+        --vc-bar-bg: var(--vc-accent-500);
+    }
+}
+
+.vc-today-color {
+    --vc-accent-50:  #8dcf43;
+    --vc-accent-100: #8dcf43;
+    --vc-accent-200: #8dcf43;
+    --vc-accent-300: #8dcf43;
+    --vc-accent-400: #8dcf43;
+    --vc-accent-500: #8dcf43;
+    --vc-accent-600: #8dcf43;
+    --vc-accent-700: #8dcf43;
+    --vc-accent-800: #8dcf43;
+    --vc-accent-900: #8dcf43;
+}
+
+.vc-selected-color {
+    --vc-accent-50:  #3ea0d6;
+    --vc-accent-100: #3ea0d6;
+    --vc-accent-200: #3ea0d6;
+    --vc-accent-300: #3ea0d6;
+    --vc-accent-400: #3ea0d6;
+    --vc-accent-500: #3ea0d6;
+    --vc-accent-600: #3ea0d6;
+    --vc-accent-700: #3ea0d6;
+    --vc-accent-800: #3ea0d6;
+    --vc-accent-900: #3ea0d6;
+}

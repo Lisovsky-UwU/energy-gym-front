@@ -14,13 +14,19 @@
         <Loading/>
       </div>
 
-      <div v-else-if="entryStore.myEntries.length > 0" v-for="entry in entryStore.myEntries" :key="entry.id" class="bg-second rounded-md shadow-md text-white text-center flex flex-row p-2">
-        <span class="w-full text-center p-1">
-          {{ weekdayNames[entry.selectedTime.weekday] }}: {{ entry.selectedTime.time }} 
-        </span>
-        <button v-if="selectedMonth == 'next'" title="Удалить объявление" class="hover:bg-white hover:bg-opacity-15 transition-all rounded-md px-2" @click="btnDeleteEntry(entry)">
-          <svg-icon class="h-6 w-6" type="mdi" :path="mdiClose"></svg-icon>
-        </button>
+      <div v-else-if="entryStore.myEntries.length > 0" class="flex flex-col gap-2">
+        <div class="p-2 bg-second rounded-md">
+          <Calendar expanded :min-date="minMaxDateForCalendar" :max-date="minMaxDateForCalendar" class="w-full" transparent borderless is-dark :attributes="calendarAttributes"/>
+        </div>
+
+        <div v-for="entry in entryStore.myEntries" :key="entry.id" class="bg-second rounded-md shadow-md text-white text-center flex flex-row p-2">
+          <span class="w-full text-center p-1">
+            {{ weekdayNames[entry.selectedTime.weekday] }}: {{ entry.selectedTime.time }} 
+          </span>
+          <button v-if="selectedMonth == 'next'" title="Удалить объявление" class="hover:bg-white hover:bg-opacity-15 transition-all rounded-md px-2" @click="btnDeleteEntry(entry)">
+            <svg-icon class="h-6 w-6" type="mdi" :path="mdiClose"></svg-icon>
+          </button>
+        </div>
       </div>
 
       <div class="w-full min-h-72 h-full place-items-center gap-3 flex flex-col justify-center text-2xl text-center" v-else>
@@ -29,7 +35,7 @@
       </div>
     </div>
 
-    <div class="basis-1/2 bg-background rounded-md flex flex-col gap-4 p-4 overflow-auto min-h-72">
+    <div class="basis-1/2 bg-background rounded-md flex flex-col gap-4 p-4 overflow-auto min-h-72 mb-10 sm:mb-0">
       <div class="w-full h-full place-items-center flex justify-center text-xl text-center" v-if="loadNews">
         <Loading/>
       </div>
@@ -76,20 +82,38 @@ import LoadingSmall from '@/components/ui/LoadingSmall.vue';
 import SvgIcon from '@jamescoyle/vue-icon'
 import { mdiFileDocumentRemove, mdiNewspaperRemove, mdiClose } from '@mdi/js';
 
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useEntryStore, type Entry } from '@/stores/entry'
 import { useNewsStore } from '@/stores/news'
 import { weekdayNames } from '@/Common';
 
+import { Calendar } from 'v-calendar';
+
 const entryStore = useEntryStore()
 const newsStore = useNewsStore()
 const selectedMonth = ref('current')
+const minMaxDateForCalendar = ref(new Date())
 
 const loadEntries = ref(true)
 const loadNews = ref(true)
 const loadDeleteEntry = ref(false)
 const showConfirmDelete = ref(false)
 const selectedEntry = ref({} as Entry)
+
+const calendarAttributes = computed(() => [
+  ...entryStore.forCallendarMapped.map(entry => ({
+    dates: entry.dates,
+    highlight: 'selected-color',
+    popover: {
+      label: entry.description,
+    },
+    
+  })),
+  {
+    dates: new Date(),
+    highlight: 'today-color'
+  },
+])
 
 onMounted(() => {
   doLoadEntries()
@@ -101,6 +125,12 @@ onMounted(() => {
 
 function doLoadEntries() {
   loadEntries.value = true
+  if (selectedMonth.value == 'current') {
+    minMaxDateForCalendar.value = new Date()
+  } else if (selectedMonth.value == 'next') {
+    let currentDate = new Date()
+    minMaxDateForCalendar.value.setMonth(currentDate.getMonth() + 1)
+  }
   entryStore.loadMyEntries(selectedMonth.value)
     .finally(() => {
       loadEntries.value = false
