@@ -33,6 +33,10 @@ export const useVisitStore = defineStore('visit', {
 
         async updateVisit(id: number, mark: number) {
             await api.doRequest('/visit/edit', 'PUT', { id: id, mark: mark })
+        },
+
+        async cancelLesson(date: string, time: string) {
+            await api.doRequest('/visit/cancel-lesson', 'POST', { date: date, time: time })
         }
     }
 })

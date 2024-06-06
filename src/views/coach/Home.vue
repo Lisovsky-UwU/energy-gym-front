@@ -17,21 +17,26 @@
         <Loading/>
       </div>
 
-      <div v-for="visit in visitStore.visits" :key="visit.id" class="w-full flex gap-2" v-else-if="visitStore.visits.length > 0" >
-        <div class="entry-block grow cursor-pointer" @click="doShowStudentInfo(visit)">
-          <span class="text-lg">{{ visit.user.secondname }} {{ visit.user.firstname }} {{ visit.user.surname }}</span>
+      <div v-else-if="visitStore.visits.length > 0" class="w-full flex flex-col gap-2">
+        <button class="bg-slate-500 px-4 py-2 rounded-md transition-all text-white" @click="showCancelLessonDialog = true">Отменить занятие</button>
+
+        <div v-for="visit in visitStore.visits" :key="visit.id" class="flex gap-2">
+          <div class="entry-block grow cursor-pointer" @click="doShowStudentInfo(visit)">
+            <span class="text-lg">{{ visit.user.secondname }} {{ visit.user.firstname }} {{ visit.user.surname }}</span>
+          </div>
+          <select 
+            :class="`text-white rounded-md p-1 shadow-md ${bgColor[visit.mark]}`" 
+            :name="`visit-${visit.id}`" 
+            :id="`visit-${visit.id}`"
+            v-model="visit.mark"
+            @change="updateVisit(visit.id, Number($event.target?.value))"
+          >
+            <option :value="1">Присутствует</option>
+            <option :value="2">Уважительная</option>
+            <option :value="0">Отсутствует</option>
+            <option :value="3" v-if="visit.mark == 3">Отменено</option>
+          </select>
         </div>
-        <select 
-          :class="`text-white rounded-md p-1 shadow-md ${bgColor[visit.mark]}`" 
-          :name="`visit-${visit.id}`" 
-          :id="`visit-${visit.id}`"
-          v-model="visit.mark"
-          @change="updateVisit(visit.id, Number($event.target?.value))"
-        >
-          <option :value="1">Присутствует</option>
-          <option :value="2">Уважительная</option>
-          <option :value="0">Отсутствует</option>
-        </select>
       </div>
 
       <div class="w-full min-h-72 h-full place-items-center gap-3 flex flex-col justify-center text-2xl text-center" v-else>
@@ -111,6 +116,24 @@
       <button class="w-full bg-second text-white rounded-b-md text-xl py-3" @click="showStudentInfo = false">Закрыть</button>
     </div>
   </ModalDialog>
+
+  <!--------------------------------------- ДИАЛОГ НА ОТМЕНУ ЗАНЯТИЯ --------------------------------------->
+  <ModalDialog v-model="showCancelLessonDialog">
+    <div class="flex flex-col gap-6 pt-5 px-6 pb-3  rounded-md bg-background">
+      <span class="text-2xl">
+        Вы уверены что хотите отменить занятие?
+      </span>
+      <div class="flex place-content-center gap-2">
+        <button :disabled="loading.cancelLesson" class="text-white text-xl px-6 py-2 rounded-md transition-all bg-red-600" :class="loading.cancelLesson ? '' : 'hover:bg-red-400'" @click="confirmCancelLesson()">
+          <LoadingSmall v-if="loading.cancelLesson"/>
+          Да
+        </button>
+        <button :disabled="loading.cancelLesson" class="text-white text-xl px-6 py-2 rounded-md transition-all bg-second" :class="loading.cancelLesson ? '' : 'hover:bg-slate-600'" @click="showConfirmDelete = false">
+          Нет
+        </button>
+      </div>
+    </div>
+  </ModalDialog>
 </template>
 
 
@@ -134,12 +157,14 @@ const visitStore = useVisitStore()
 let loading = reactive({
   visits: true,
   news: true,
+  cancelLesson: false,
   createNew: false,
   deleteNew: false
 })
 
 const showConfirmDelete = ref(false)
 const showStudentInfo = ref(false)
+const showCancelLessonDialog = ref(false)
 let selectedVisit = reactive({}) as Visit
 
 const deletedNewId = ref(-1)
@@ -152,6 +177,7 @@ const bgColor = {
   0: 'bg-red-600',
   1: 'bg-green-600',
   2: 'bg-yellow-500',
+  3: 'bg-slate-500'
 } as any
 
 const newText = ref('')
@@ -217,6 +243,18 @@ function confirmDeleteNew() {
     })
     .finally(() => {
       loading.deleteNew = false
+    })
+}
+
+function confirmCancelLesson() {
+  loading.cancelLesson = true
+  visitStore.cancelLesson(selectedDate.date, selectedDate.time)
+    .then(() => {
+      showCancelLessonDialog.value = false
+      doLoadVisits()
+    })
+    .finally(() => {
+      loading.cancelLesson = false
     })
 }
 </script>
