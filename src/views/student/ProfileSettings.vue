@@ -1,11 +1,11 @@
 <template>
   <MainBlockLkTemplate title="Настройки профиля">
     <div class="p-4 grid grid-cols-1 lg:grid-cols-2 lg:gap-4 min-h-[500px] gap-3 lg:min-h-0">
-      <ui-input label="Фамилия" v-model="localUserData.secondname"/>
-      <ui-input label="Имя" v-model="localUserData.firstname"/>
-      <ui-input label="Отчество" v-model="localUserData.surname"/>
+      <ui-input label="Фамилия" v-model="localUserData.secondname" readonly/>
+      <ui-input label="Имя" v-model="localUserData.firstname" readonly/>
+      <ui-input label="Отчество" v-model="localUserData.surname" readonly/>
       <ui-input label="Студенческий билет" v-model="localUserData.studentCard" readonly/>
-      <ui-input label="Группа" v-model="localUserData.group"/>
+      <ui-input label="Группа" v-model="localUserData.group" readonly/>
       <div class="flex place-items-center justify-center">
         <input type="file" id="fileInput" hidden @change="loadNewPhoto" accept=".jpg,.png,.bmp">
         <button :disabled="loadingUpdateImage" :class="loadingUpdateImage ? 'btn-custom-load' : 'btn-custom'" class="btn-custom" @click="updatePhoto">
@@ -13,12 +13,12 @@
           Выбрать фото
         </button>
       </div>
-      <div class="lg:col-span-2 flex place-items-center justify-center">
+      <!-- <div class="lg:col-span-2 flex place-items-center justify-center">
         <button :disabled="loadingSave" :class="loadingSave ? 'btn-custom-load' : 'btn-custom'" @click="updateUserData()">
           <LoadingSmall v-if="loadingSave"/>
           Сохранить изменения
         </button>
-      </div>
+      </div> -->
 
       <hr class="lg:col-span-2 mt-4" noshade style="height: 2px;">
       <span class="lg:col-span-2 text-center text-xl">
@@ -52,7 +52,7 @@ import { useSnackbarStore } from '@/stores/snackbar';
 const userData = useUserDataStore()
 const snackbar = useSnackbarStore()
 
-const loadingSave = ref(false)
+// const loadingSave = ref(false)
 const loadingSavePassword = ref(false)
 const loadingUpdateImage = ref(false)
 const localUserData = reactive({...userData.userData}) as UserData
@@ -63,13 +63,13 @@ const passwordChangeData = reactive({
   newPasswordRepeat: ''
 })
 
-function updateUserData() {
-  loadingSave.value = true
-  userData.update(localUserData, 'STUDENT')
-    .finally(() => {
-      loadingSave.value = false
-    })
-}
+// function updateUserData() {
+//   loadingSave.value = true
+//   userData.update(localUserData, 'STUDENT')
+//     .finally(() => {
+//       loadingSave.value = false
+//     })
+// }
 
 function changePassword() {
   if (passwordChangeData.newPassword != passwordChangeData.newPasswordRepeat) {

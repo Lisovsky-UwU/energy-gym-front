@@ -86,13 +86,13 @@ export const useUserDataStore = defineStore('userData', {
             }
         },
 
-        async update(newData: UserData, userRole: string) {
-            const api = await import('./api')
-            let userApi = userRole == 'STUDENT' ? api.useApiStudentStore() : api.useApiCoachStore()
-            const response: UserData = await userApi.doRequest('/user/edit', 'PUT', newData)
-            this.set(response)
-            snackbar.showSuccess('Данные успешно сохранены')
-        },
+        // async update(newData: UserData, userRole: string) {
+        //     const api = await import('./api')
+        //     let userApi = userRole == 'STUDENT' ? api.useApiStudentStore() : api.useApiCoachStore()
+        //     const response: UserData = await userApi.doRequest('/user/edit', 'PUT', newData)
+        //     this.set(response)
+        //     snackbar.showSuccess('Данные успешно сохранены')
+        // },
 
         async changePassword(oldPassword: string, newPassword: string, userRole: string) {
             const api = await import('./api')
