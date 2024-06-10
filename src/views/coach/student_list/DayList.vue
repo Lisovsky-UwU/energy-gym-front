@@ -57,9 +57,18 @@
 <script lang="ts" setup>
 import Loading from '@/components/ui/Loading.vue';
 import MainBlockLkTemplate from '@/components/ui/MainBlockLkTemplate.vue'
-import { weekdayNames } from '@/Common';
 import { useEntryStore, type EntryExtend } from '@/stores/entry'
 import { ref, onMounted } from 'vue';
+
+const weekdayNames = {
+    0: 'понедельник',
+    1: 'вторник',
+    2: 'среду',
+    3: 'четверг',
+    4: 'пятницу',
+    5: 'субботу',
+    6: 'воскресенье'
+} as any
 
 const entryStore = useEntryStore()
 let entries = ref([] as Array<EntryExtend>)
