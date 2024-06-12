@@ -64,7 +64,7 @@ const passwordChangeData = reactive({
 
 function updateUserData() {
   loadingSave.value = true
-  userData.update(localUserData, 'COACH')
+  userData.update(localUserData)
     .finally(() => {
       loadingSave.value = false
     })
