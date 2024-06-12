@@ -131,7 +131,7 @@
           <LoadingSmall v-if="loading.cancelLesson"/>
           Да
         </button>
-        <button :disabled="loading.cancelLesson" class="text-white text-xl px-6 py-2 rounded-md transition-all bg-second" :class="loading.cancelLesson ? '' : 'hover:bg-slate-600'" @click="showConfirmDelete = false">
+        <button :disabled="loading.cancelLesson" class="text-white text-xl px-6 py-2 rounded-md transition-all bg-second" :class="loading.cancelLesson ? '' : 'hover:bg-slate-600'" @click="showCancelLessonDialog = false">
           Нет
         </button>
       </div>
